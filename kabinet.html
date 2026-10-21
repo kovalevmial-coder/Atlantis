@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Личный кабинет — Атлантис</title>
+  <meta name="description" content="Личный кабинет родителя (демо).">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/pages.js" defer></script>
+</head>
+<body data-page="cabinet">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html" aria-label="Атлантис, на главную">
+        <span class="logo__name">АТЛАНТИС</span>
+        <span class="logo__sub">развивающие занятия</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="napravleniya.html">Направления</a></li>
+          <li><a class="nav__link" href="kalligrafiya.html">Каллиграфия</a></li>
+          <li><a class="nav__link" href="raspisanie.html">Расписание</a></li>
+          <li><a class="nav__link" href="ceny.html">Цены</a></li>
+          <li><a class="nav__link" href="pedagog.html">Педагог</a></li>
+          <li><a class="nav__link" href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="header__phone" href="#" data-center="phone"></a>
+        <a class="btn btn--ghost btn--sm" href="index.html" title="Выйти"><i data-icon="logout"></i><span class="visually-hidden">Выйти</span></a>
+        <a class="btn btn--primary btn--sm" href="#signup" data-signup>Записаться</a>
+        <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="Открыть меню"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container cab">
+      <aside class="cab__side">
+        <div class="cab__user">
+          <div class="ph ph--round"></div>
+          <div><strong>Елена Иванова</strong><br><span class="small muted">Родитель</span></div>
+        </div>
+        <ul class="cab__menu" role="tablist" aria-label="Разделы кабинета" aria-orientation="vertical">
+          <li><button class="cab__link" type="button" role="tab" aria-controls="cp-home" aria-selected="true"><i data-icon="chart"></i> Главная</button></li>
+          <li><button class="cab__link" type="button" role="tab" aria-controls="cp-lessons" aria-selected="false" tabindex="-1"><i data-icon="calendar"></i> Занятия</button></li>
+          <li><button class="cab__link" type="button" role="tab" aria-controls="cp-attendance" aria-selected="false" tabindex="-1"><i data-icon="checkCircle"></i> Посещаемость</button></li>
+          <li><button class="cab__link" type="button" role="tab" aria-controls="cp-groups" aria-selected="false" tabindex="-1"><i data-icon="users"></i> Мои группы</button></li>
+          <li><button class="cab__link cab__link--disabled" type="button" disabled><i data-icon="wallet"></i> Оплата <span class="badge badge--muted">скоро</span></button></li>
+          <li><button class="cab__link cab__link--disabled" type="button" disabled><i data-icon="chat"></i> Сообщения <span class="badge badge--muted">скоро</span></button></li>
+        </ul>
+        <p class="small muted" style="margin:24px 0 8px">Другие роли</p>
+        <ul class="cab__menu">
+          <li><span class="cab__link cab__link--disabled"><i data-icon="book"></i> Кабинет педагога <span class="badge badge--muted">скоро</span></span></li>
+          <li><span class="cab__link cab__link--disabled"><i data-icon="shield"></i> Админ-панель <span class="badge badge--muted">скоро</span></span></li>
+        </ul>
+      </aside>
+
+      <div class="cab__main">
+        <div class="demo-banner"><i data-icon="info"></i> Демо-режим: данные условные. Кабинет заработает после подключения сервера и базы данных.</div>
+
+        <section class="tab-panel" id="cp-home" role="tabpanel">
+          <h1 style="font-size:2rem">Здравствуйте, Елена!</h1>
+          <p class="muted">Ребёнок: <strong id="cab-child"></strong></p>
+          <div class="stat-grid">
+            <div class="card stat reveal"><div class="stat__value" id="cab-sub-left"></div><div class="stat__label">занятий осталось в абонементе</div></div>
+            <div class="card stat reveal"><div class="stat__value" id="cab-att-rate"></div><div class="stat__label">посещаемость в октябре</div></div>
+            <div class="card stat reveal"><div class="stat__value">2</div><div class="stat__label">группы</div></div>
+          </div>
+          <div class="grid grid--2">
+            <div class="card reveal">
+              <h3>Ближайшие занятия</h3>
+              <div id="cab-next"></div>
+            </div>
+            <div class="card reveal">
+              <h3 id="cab-sub-title"></h3>
+              <div class="progress"><i id="cab-sub-bar"></i></div>
+              <p class="small muted" id="cab-sub-text"></p>
+              <button class="btn btn--primary" type="button" data-demo="Продление абонемента">Продлить абонемент</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="cp-lessons" role="tabpanel" hidden>
+          <h2>Занятия</h2>
+          <div class="card" id="cab-lessons"></div>
+          <div class="btn-row" style="margin-top:24px">
+            <a class="btn btn--primary" href="raspisanie.html">Записаться в новую группу</a>
+            <button class="btn btn--ghost" type="button" data-demo="Сообщение об отсутствии">Сообщить об отсутствии</button>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="cp-attendance" role="tabpanel" hidden>
+          <h2>Посещаемость, октябрь 2026</h2>
+          <div class="card" style="max-width:520px">
+            <div class="attendance" id="cab-attendance"></div>
+            <div class="legend">
+              <span><i style="background:var(--c-success-soft);border:1px solid var(--c-success)"></i> был</span>
+              <span><i style="background:#FDECEA;border:1px solid var(--c-danger)"></i> пропуск</span>
+              <span><i style="background:var(--c-primary-soft);border:1px solid var(--c-primary)"></i> запланировано</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="cp-groups" role="tabpanel" hidden>
+          <h2>Мои группы</h2>
+          <div class="grid grid--2" id="cab-groups"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+
+</body>
+</html>

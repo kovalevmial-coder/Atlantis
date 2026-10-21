@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Расписание занятий — Атлантис, Брест</title>
+  <meta name="description" content="Актуальное расписание групп центра «Атлантис» со свободными местами и записью на конкретное время.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/pages.js" defer></script>
+</head>
+<body data-page="schedule">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html" aria-label="Атлантис, на главную">
+        <span class="logo__name">АТЛАНТИС</span>
+        <span class="logo__sub">развивающие занятия</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="napravleniya.html">Направления</a></li>
+          <li><a class="nav__link" href="kalligrafiya.html">Каллиграфия</a></li>
+          <li><a class="nav__link" href="raspisanie.html">Расписание</a></li>
+          <li><a class="nav__link" href="ceny.html">Цены</a></li>
+          <li><a class="nav__link" href="pedagog.html">Педагог</a></li>
+          <li><a class="nav__link" href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="header__phone" href="#" data-center="phone"></a>
+        <a class="btn btn--ghost btn--sm" href="vhod.html"><i data-icon="user"></i> Войти</a>
+        <a class="btn btn--primary btn--sm" href="#signup" data-signup>Записаться</a>
+        <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="Открыть меню"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="index.html">Главная</a></li><li aria-current="page">Расписание</li></ol>
+        <h1>Расписание занятий</h1>
+        <p class="lead" style="max-width:720px;margin:0">Выберите направление и время. Свободные места обновляются, а записаться можно прямо из таблицы.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="chips" id="sched-filter" aria-label="Фильтр по возрасту"></div>
+        <div class="field" style="max-width:360px;margin-bottom:32px">
+          <label for="sched-dir">Направление</label>
+          <select class="select" id="sched-dir"></select>
+        </div>
+        <div class="table-wrap table-wrap--sched reveal">
+          <table class="table" id="sched-table">
+            <thead><tr><th>День</th><th>Время</th><th>Направление</th><th>Кабинет</th><th>Места</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="sched-cards" id="sched-cards"></div>
+        <div class="legend">
+          <span><i style="background:var(--c-success)"></i> есть места</span>
+          <span><i style="background:var(--c-warning)"></i> осталось 1–2 места</span>
+          <span><i style="background:var(--c-danger)"></i> мест нет, можно встать в лист ожидания</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Запишитесь на пробное занятие</h2>
+            <p>Подберём группу по возрасту и задаче ребёнка. Перезвоним в течение дня.</p>
+          </div>
+          <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное <i data-icon="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="logo" href="index.html"><span class="logo__name">АТЛАНТИС</span><span class="logo__sub">развивающие занятия</span></a>
+          <p style="margin-top:16px">Подготовка к школе, помощь в учёбе 1–6 классам, каллиграфия и английский в Бресте.</p>
+          <div class="socials">
+            <a href="https://www.instagram.com/atlantis_brest/" target="_blank" rel="noopener" aria-label="Instagram"><i data-icon="instagram"></i></a>
+            <a href="#" aria-label="Telegram"><i data-icon="telegram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Занятия</h4>
+          <ul>
+            <li><a href="napravleniya.html#podgotovka-1">Подготовка к школе</a></li>
+            <li><a href="napravleniya.html#klass-1">Помощь школьнику</a></li>
+            <li><a href="kalligrafiya.html">Каллиграфия</a></li>
+            <li><a href="napravleniya.html#english">Английский язык</a></li>
+            <li><a href="kalligrafiya.html#online">Онлайн-курсы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Центр</h4>
+          <ul>
+            <li><a href="raspisanie.html">Расписание</a></li>
+            <li><a href="ceny.html">Цены</a></li>
+            <li><a href="pedagog.html">Педагог и отзывы</a></li>
+            <li><a href="kontakty.html">Контакты</a></li>
+            <li><a href="vhod.html">Личный кабинет</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Контакты</h4>
+          <ul>
+            <li><a href="#" data-center="phone"></a></li>
+            <li data-center="address"></li>
+            <li data-center="hours"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year></span> «Атлантис». <span data-center="legal"></span></span>
+        <a href="kontakty.html#privacy">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="mobile-bar" aria-label="Быстрые действия">
+    <a class="btn btn--ghost" href="tel:+375296722833"><i data-icon="phone"></i> Позвонить</a>
+    <a class="btn btn--ghost" href="https://www.instagram.com/atlantis_brest/" target="_blank" rel="noopener"><i data-icon="chat"></i> Написать</a>
+    <a class="btn btn--primary" href="#signup" data-signup>Записаться</a>
+  </div>
+</body>
+</html>

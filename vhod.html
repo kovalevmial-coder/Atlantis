@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход в личный кабинет — Атлантис</title>
+  <meta name="description" content="Личный кабинет родителя: расписание ребёнка, абонемент, посещаемость.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/pages.js" defer></script>
+</head>
+<body data-page="auth">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html" aria-label="Атлантис, на главную">
+        <span class="logo__name">АТЛАНТИС</span>
+        <span class="logo__sub">развивающие занятия</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="napravleniya.html">Направления</a></li>
+          <li><a class="nav__link" href="kalligrafiya.html">Каллиграфия</a></li>
+          <li><a class="nav__link" href="raspisanie.html">Расписание</a></li>
+          <li><a class="nav__link" href="ceny.html">Цены</a></li>
+          <li><a class="nav__link" href="pedagog.html">Педагог</a></li>
+          <li><a class="nav__link" href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="header__phone" href="#" data-center="phone"></a>
+        <a class="btn btn--ghost btn--sm" href="vhod.html"><i data-icon="user"></i> Войти</a>
+        <a class="btn btn--primary btn--sm" href="#signup" data-signup>Записаться</a>
+        <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="Открыть меню"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="auth">
+      <div class="auth__aside">
+        <span class="eyebrow" style="color:#FFC078">Личный кабинет</span>
+        <h1>Вся учёба ребёнка в одном месте</h1>
+        <ul class="checklist" style="margin-top:24px">
+          <li>Расписание занятий и перенос урока</li>
+          <li>Остаток абонемента и онлайн-оплата</li>
+          <li>Посещаемость и комментарии педагога</li>
+          <li>Запись в группы и лист ожидания</li>
+        </ul>
+      </div>
+      <div class="auth__main">
+        <div class="auth__box">
+          <div class="tabs" role="tablist" aria-label="Вход или регистрация">
+            <button class="tabs__btn" type="button" role="tab" id="tab-login" aria-controls="panel-login" aria-selected="true">Вход</button>
+            <button class="tabs__btn" type="button" role="tab" id="tab-register" aria-controls="panel-register" aria-selected="false" tabindex="-1">Регистрация</button>
+          </div>
+
+          <div class="tab-panel" id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+            <h2>Вход</h2>
+            <form class="form">
+              <fieldset style="border:0;padding:0;margin:0">
+                <legend class="small muted" style="margin-bottom:8px">Я вхожу как</legend>
+                <div class="roles">
+                  <div class="role"><input type="radio" name="role" id="r-parent" value="parent" checked><label for="r-parent"><i data-icon="users"></i>Родитель</label></div>
+                  <div class="role"><input type="radio" name="role" id="r-teacher" value="teacher"><label for="r-teacher"><i data-icon="book"></i>Педагог</label></div>
+                  <div class="role"><input type="radio" name="role" id="r-admin" value="admin"><label for="r-admin"><i data-icon="shield"></i>Администратор</label></div>
+                </div>
+              </fieldset>
+              <div class="field">
+                <label for="l-email">Электронная почта</label>
+                <input class="input" id="l-email" type="email" autocomplete="email" data-validate="email">
+                <span class="field__error">Введите корректный адрес почты</span>
+              </div>
+              <div class="field">
+                <label for="l-pass">Пароль</label>
+                <input class="input" id="l-pass" type="password" autocomplete="current-password" data-validate="password">
+                <span class="field__error">Минимум 8 символов</span>
+                <span class="hint"><button class="btn btn--ghost btn--sm" type="button" data-toggle-password="l-pass" style="min-height:32px;padding:2px 10px">Показать</button> <a href="#" style="margin-left:8px">Забыли пароль?</a></span>
+              </div>
+              <button class="btn btn--primary btn--block" type="submit">Войти</button>
+            </form>
+            <div class="divider">или</div>
+            <a class="btn btn--secondary btn--block" href="kabinet.html">Открыть демо-кабинет родителя</a>
+          </div>
+
+          <div class="tab-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register" hidden>
+            <h2>Регистрация родителя</h2>
+            <p class="small muted">Аккаунты педагогов и администратора создаёт центр.</p>
+            <form class="form">
+              <div class="field">
+                <label for="g-name">Имя и фамилия</label>
+                <input class="input" id="g-name" autocomplete="name" data-validate="name">
+                <span class="field__error">Введите имя</span>
+              </div>
+              <div class="field">
+                <label for="g-phone">Телефон</label>
+                <input class="input" id="g-phone" type="tel" inputmode="tel" autocomplete="tel" data-validate="phone">
+                <span class="field__error">Введите номер полностью</span>
+              </div>
+              <div class="field">
+                <label for="g-email">Электронная почта</label>
+                <input class="input" id="g-email" type="email" autocomplete="email" data-validate="email">
+                <span class="field__error">Введите корректный адрес почты</span>
+              </div>
+              <div class="field">
+                <label for="g-pass">Пароль</label>
+                <input class="input" id="g-pass" type="password" autocomplete="new-password" data-validate="password">
+                <span class="field__error">Минимум 8 символов</span>
+                <span class="hint">Не меньше 8 символов. Пароль хранится в зашифрованном виде.</span>
+              </div>
+              <label class="check"><input type="checkbox" data-validate="checked"><span>Согласен на обработку персональных данных</span></label>
+              <button class="btn btn--primary btn--block" type="submit">Создать аккаунт</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+</body>
+</html>

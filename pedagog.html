@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Педагог и отзывы — Атлантис, Брест</title>
+  <meta name="description" content="Анна Александровна Ковалёва — педагог и основатель центра «Атлантис», 20 лет опыта. Отзывы родителей.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/pages.js" defer></script>
+</head>
+<body data-page="teacher">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html" aria-label="Атлантис, на главную">
+        <span class="logo__name">АТЛАНТИС</span>
+        <span class="logo__sub">развивающие занятия</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="napravleniya.html">Направления</a></li>
+          <li><a class="nav__link" href="kalligrafiya.html">Каллиграфия</a></li>
+          <li><a class="nav__link" href="raspisanie.html">Расписание</a></li>
+          <li><a class="nav__link" href="ceny.html">Цены</a></li>
+          <li><a class="nav__link" href="pedagog.html">Педагог</a></li>
+          <li><a class="nav__link" href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="header__phone" href="#" data-center="phone"></a>
+        <a class="btn btn--ghost btn--sm" href="vhod.html"><i data-icon="user"></i> Войти</a>
+        <a class="btn btn--primary btn--sm" href="#signup" data-signup>Записаться</a>
+        <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="Открыть меню"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="index.html">Главная</a></li><li aria-current="page">Педагог</li></ol>
+        <h1>Педагог и отзывы</h1>
+        <p class="lead" style="max-width:720px;margin:0">Центр «Атлантис» — это авторская система занятий и педагог, который знает каждого ученика.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container teacher">
+        <div class="ph ph--tall reveal"><span>Фото: портрет педагога</span></div>
+        <div>
+          <span class="eyebrow reveal">Педагог и основатель центра</span>
+          <h2 class="reveal">Анна Александровна Ковалёва</h2>
+          <p class="lead reveal">Помогаю детям подготовиться к школе, разобраться в программе 1–6 классов и исправить почерк.</p>
+          <div class="facts reveal">
+            <div class="fact"><strong data-count="20">20</strong><span>лет обучаю детей</span></div>
+            <div class="fact"><strong>БрГТУ</strong><span>образование</span></div>
+            <div class="fact"><strong data-count="10">10</strong><span>детей максимум в группе</span></div>
+          </div>
+          <blockquote class="quote reveal">Простые шаги ребёнок делает сам, сложные мы преодолеваем вместе.</blockquote>
+          <ul class="checklist reveal">
+            <li>Разбираю сложную тему заранее, в малой группе</li>
+            <li>Контролирую, правильно ли каждый ребёнок понял материал</li>
+            <li>Авторские курсы каллиграфии и скорочтения</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Как проходят занятия</span><h2>Учимся, играя</h2></div>
+        <div class="grid grid--3">
+          <div class="card reveal"><div class="ph" style="margin-bottom:16px"><span>Фото: «дерево успеха»</span></div><h3>Дерево успеха</h3><p class="muted">Сезонные магниты-награды за старание мотивируют лучше оценок.</p></div>
+          <div class="card reveal"><div class="ph" style="margin-bottom:16px"><span>Фото: развивающие игры</span></div><h3>Развивающие пособия</h3><p class="muted">Кубики, карточки, рамки-вкладыши и сюжетные игры для речи и мышления.</p></div>
+          <div class="card reveal"><div class="ph" style="margin-bottom:16px"><span>Фото: папки «Атлантис»</span></div><h3>Папки по классам</h3><p class="muted">Свои пособия: чтение, математика, русский язык, словарные слова.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section anchor-target" id="reviews-all">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Отзывы</span><h2>Что говорят родители</h2></div>
+        <div class="grid grid--2" id="reviews"></div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Запишитесь на пробное занятие</h2>
+            <p>Подберём группу по возрасту и задаче ребёнка. Перезвоним в течение дня.</p>
+          </div>
+          <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное <i data-icon="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="logo" href="index.html"><span class="logo__name">АТЛАНТИС</span><span class="logo__sub">развивающие занятия</span></a>
+          <p style="margin-top:16px">Подготовка к школе, помощь в учёбе 1–6 классам, каллиграфия и английский в Бресте.</p>
+          <div class="socials">
+            <a href="https://www.instagram.com/atlantis_brest/" target="_blank" rel="noopener" aria-label="Instagram"><i data-icon="instagram"></i></a>
+            <a href="#" aria-label="Telegram"><i data-icon="telegram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Занятия</h4>
+          <ul>
+            <li><a href="napravleniya.html#podgotovka-1">Подготовка к школе</a></li>
+            <li><a href="napravleniya.html#klass-1">Помощь школьнику</a></li>
+            <li><a href="kalligrafiya.html">Каллиграфия</a></li>
+            <li><a href="napravleniya.html#english">Английский язык</a></li>
+            <li><a href="kalligrafiya.html#online">Онлайн-курсы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Центр</h4>
+          <ul>
+            <li><a href="raspisanie.html">Расписание</a></li>
+            <li><a href="ceny.html">Цены</a></li>
+            <li><a href="pedagog.html">Педагог и отзывы</a></li>
+            <li><a href="kontakty.html">Контакты</a></li>
+            <li><a href="vhod.html">Личный кабинет</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Контакты</h4>
+          <ul>
+            <li><a href="#" data-center="phone"></a></li>
+            <li data-center="address"></li>
+            <li data-center="hours"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year></span> «Атлантис». <span data-center="legal"></span></span>
+        <a href="kontakty.html#privacy">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="mobile-bar" aria-label="Быстрые действия">
+    <a class="btn btn--ghost" href="tel:+375296722833"><i data-icon="phone"></i> Позвонить</a>
+    <a class="btn btn--ghost" href="https://www.instagram.com/atlantis_brest/" target="_blank" rel="noopener"><i data-icon="chat"></i> Написать</a>
+    <a class="btn btn--primary" href="#signup" data-signup>Записаться</a>
+  </div>
+</body>
+</html>
