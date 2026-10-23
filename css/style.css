@@ -551,7 +551,7 @@ html:not(.js) .faq__a { grid-template-rows: 1fr; }
   .header__actions .btn--primary { display: none; }
   .hero__grid, .split, .teacher, .dir-detail, .auth { grid-template-columns: 1fr; }
   .hero__media { max-width: 560px; }
-  .hero__media .ph--tall { aspect-ratio: 4 / 3; }
+  .hero__media .ph--tall, .photo--hero { aspect-ratio: 4 / 3; object-position: center 20%; }
   .hero__badge { left: 12px; bottom: 12px; }
   .grid--3, .grid--4 { grid-template-columns: repeat(2, 1fr); }
   .cab { grid-template-columns: 1fr; }
