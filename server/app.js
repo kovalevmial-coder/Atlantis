@@ -33,6 +33,9 @@ function createApp({ secure = false } = {}) {
         upgradeInsecureRequests: secure ? [] : null
       }
     },
+    // при no-referrer (по умолчанию в helmet) браузер шлёт Origin: null у обычных форм,
+    // и проверка источника отклоняла, например, кнопку «Выйти»
+    referrerPolicy: { policy: 'same-origin' },
     hsts: secure
   }));
 
