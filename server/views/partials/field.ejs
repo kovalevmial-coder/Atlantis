@@ -1,0 +1,25 @@
+<%# Поле формы конструктора по описанию f и значению val %>
+<% var id = 'f-' + f.name; var v = (val === null || val === undefined) ? (f.default !== undefined ? f.default : '') : val; %>
+<% if (f.type === 'bool') { %>
+  <label class="check"><input type="checkbox" name="<%= f.name %>" <%= v ? 'checked' : '' %>><span><%= f.label %></span></label>
+<% } else { %>
+<div class="field<%= f.type === 'textarea' || f.type === 'lines' ? ' field--wide' : '' %>">
+  <label for="<%= id %>"><%= f.label %><%= f.required ? ' *' : '' %></label>
+  <% if (f.type === 'textarea' || f.type === 'lines') { %>
+    <textarea class="input" id="<%= id %>" name="<%= f.name %>" rows="<%= f.type === 'lines' ? 5 : 4 %>"<%= f.required ? ' required' : '' %>><%= Array.isArray(v) ? v.join('\n') : v %></textarea>
+  <% } else if (f.type === 'select') { %>
+    <select class="select" id="<%= id %>" name="<%= f.name %>"<%= f.required ? ' required' : '' %>>
+      <% if (!f.required) { %><option value="">—</option><% } %>
+      <% (options || []).forEach(function (o) { %><option value="<%= o.value %>"<%= String(o.value) === String(v) ? ' selected' : '' %>><%= o.label %></option><% }) %>
+    </select>
+  <% } else if (f.type === 'image') { %>
+    <% if (v) { %><img src="/files/<%= v %>" alt="" class="field__preview"><label class="check"><input type="checkbox" name="<%= f.name %>__remove"><span>Удалить картинку</span></label><% } %>
+    <input class="input" id="<%= id %>" name="file" type="file" accept=".jpg,.jpeg,.png,.webp">
+  <% } else { %>
+    <input class="input" id="<%= id %>" name="<%= f.name %>" value="<%= v %>"
+      type="<%= f.type === 'color' ? 'color' : (f.type === 'int' || f.type === 'money') ? 'number' : 'text' %>"
+      <%= f.type === 'money' ? 'step=0.01' : '' %> <%= f.min !== undefined ? 'min=' + f.min : '' %> <%= f.type !== 'int' && f.type !== 'money' && f.max ? 'maxlength=' + f.max : '' %> <%= f.required ? 'required' : '' %>>
+  <% } %>
+  <% if (f.hint) { %><span class="hint"><%= f.hint %></span><% } %>
+</div>
+<% } %>

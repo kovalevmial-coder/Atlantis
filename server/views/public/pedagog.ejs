@@ -1,0 +1,42 @@
+<%- include('../partials/head', { title: t.full_name, description: (t.position || 'Педагог') + ' центра «Атлантис». ' + (t.lead || ''), page: 'teacher-profile' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="/">Главная</a></li><li><a href="/pedagog.html">Педагоги</a></li><li aria-current="page"><%= t.full_name %></li></ol>
+        <h1><%= t.full_name %></h1>
+        <% if (t.lead) { %><p class="lead" style="max-width:720px;margin:0"><%= t.lead %></p><% } %>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container teacher">
+        <img class="photo reveal" src="<%= t.photo %>" alt="<%= t.full_name %>" width="668" height="846" loading="lazy">
+        <div>
+          <span class="eyebrow reveal"><%= t.position || 'Педагог' %></span>
+          <h2 class="reveal"><%= t.full_name %></h2>
+          <div class="facts reveal">
+            <% if (t.experience_years) { %><div class="fact"><strong><%= t.experience_years %></strong><span>лет обучает детей</span></div><% } %>
+            <% if (t.education) { %><div class="fact"><strong><i data-icon="school"></i></strong><span><%= t.education %></span></div><% } %>
+            <% if (t.products.length) { %><div class="fact"><strong><%= t.products.length %></strong><span><%= t.products.length === 1 ? 'направление' : 'направления' %> в центре</span></div><% } %>
+          </div>
+          <% if (t.motto) { %><blockquote class="quote reveal"><%= t.motto %></blockquote><% } %>
+          <% if (t.achievements.length) { %>
+            <h3 class="reveal">Регалии и достижения</h3>
+            <ul class="checklist reveal"><% t.achievements.forEach(function (a) { %><li><%= a %></li><% }) %></ul>
+          <% } %>
+          <% if (t.products.length) { %>
+            <h3 class="reveal">Ведёт занятия</h3>
+            <div class="chips reveal"><% t.products.forEach(function (p) { %><span class="chip"><%= p %></span><% }) %></div>
+          <% } %>
+          <div class="btn-row reveal">
+            <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное</a>
+            <a class="btn btn--secondary" href="/raspisanie.html?teacher=<%= t.id %>">Расписание педагога</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

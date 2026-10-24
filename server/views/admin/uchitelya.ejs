@@ -1,0 +1,16 @@
+<%- include('../partials/cab-start', { title: 'Учителя', active: '/direktor/uchitelya' }) %>
+<div class="cab-head"><h1 class="h2">Учителя</h1><a class="btn btn--primary" href="/direktor/uchitelya/new"><i data-icon="plus"></i> Добавить учителя</a></div>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Учитель</th><th>Точки</th><th>Группы</th><th>На сайте</th><th></th></tr></thead>
+  <tbody>
+  <% list.forEach(function (t) { %>
+    <tr<%= t.is_active ? '' : ' class="is-muted"' %>>
+      <td><b><%= t.full_name %></b><br><span class="small muted"><%= t.email %> · <%= t.position || '' %><%= t.role === 'DIRECTOR' ? ' · директор' : '' %></span></td>
+      <td class="small"><%= t.branches || '—' %></td><td><%= t.groups %></td>
+      <td><% if (t.slug && t.show_on_site) { %><a href="/pedagog/<%= t.slug %>" target="_blank">страница</a><% } else { %>нет<% } %></td>
+      <td><a class="btn btn--ghost btn--sm" href="/direktor/uchitelya/<%= t.id %>"><i data-icon="edit"></i> Изменить</a></td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table></div>
+<%- include('../partials/cab-end') %>

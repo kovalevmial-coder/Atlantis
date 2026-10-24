@@ -1,0 +1,29 @@
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="/" aria-label="Атлантис, на главную">
+        <span class="logo__name">АТЛАНТИС</span>
+        <span class="logo__sub">развивающие занятия</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="/napravleniya.html">Направления</a></li>
+          <li><a class="nav__link" href="/kalligrafiya.html">Каллиграфия</a></li>
+          <li><a class="nav__link" href="/raspisanie.html">Расписание</a></li>
+          <li><a class="nav__link" href="/ceny.html">Цены</a></li>
+          <li><a class="nav__link" href="/pedagog.html">Педагоги</a></li>
+          <li><a class="nav__link" href="/reyting.html">Рейтинг</a></li>
+          <li><a class="nav__link" href="/kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="header__phone" href="#" data-center="phone"></a>
+        <% if (user) { %>
+          <a class="btn btn--ghost btn--sm" href="<%= user.home %>"><i data-icon="user"></i> Кабинет<% if (user.unread > 0) { %> <span class="badge badge--count"><%= user.unread %></span><% } %></a>
+        <% } else { %>
+          <a class="btn btn--ghost btn--sm" href="/vhod"><i data-icon="user"></i> Войти</a>
+        <% } %>
+        <a class="btn btn--primary btn--sm" href="#signup" data-signup>Записаться</a>
+        <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="Открыть меню"><span></span></button>
+      </div>
+    </div>
+  </header>

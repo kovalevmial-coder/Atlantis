@@ -82,7 +82,8 @@
 
   /* ---------- Главная ---------- */
   function home() {
-    const featured = ['podgotovka-1', 'klass-1', 'klass-3-4', 'kalligrafiya', 'matematika-5-6', 'english'];
+    // Список для главной задаёт сервер (продукты с отметкой «на главной»); в статической версии — фиксированный
+    const featured = (D.homeDirections || ['podgotovka-1', 'klass-1', 'klass-3-4', 'kalligrafiya', 'matematika-5-6', 'english']).filter((id) => byId[id]);
     fill('#home-dirs', featured.map((id) => dirCard(byId[id])).join(''));
     fill('#reviews', D.reviews.slice(0, 3).map(reviewCard).join(''));
     fill('#faq', faqItems(D.faq));

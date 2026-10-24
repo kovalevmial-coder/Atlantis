@@ -1,0 +1,26 @@
+<%- include('../partials/head', { title: 'Рейтинг учеников', description: 'Топ-10 учеников центра «Атлантис» по направлениям за месяц.', page: 'rating' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="/">Главная</a></li><li aria-current="page">Рейтинг</li></ol>
+        <h1>Рейтинг учеников</h1>
+        <p class="lead" style="max-width:720px;margin:0">Топ-10 по каждому направлению за месяц. После каждого занятия учитель ставит от 0 до 10 баллов за работу на уроке и домашнее задание.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <form class="month-switch" method="get" action="/reyting.html">
+          <a class="btn btn--ghost btn--sm" href="?month=<%= prevMonth %>" aria-label="Предыдущий месяц">←</a>
+          <strong><%= monthName %></strong>
+          <a class="btn btn--ghost btn--sm" href="?month=<%= nextMonth %>" aria-label="Следующий месяц">→</a>
+        </form>
+        <%- include('../partials/top10', { top: top }) %>
+        <p class="small muted" style="margin-top:24px">На сайте показываются только имя и первая буква фамилии ребёнка и только при согласии родителя. Своё место ребёнок всегда видит в личном кабинете.</p>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

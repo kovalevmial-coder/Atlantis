@@ -1,0 +1,10 @@
+<%- include('../partials/cab-start', { title: 'Настройки сайта', active: '/direktor/konstruktor' }) %>
+<a class="small" href="/direktor/konstruktor">← Конструктор</a>
+<h1 class="h2" style="margin-top:8px">Настройки сайта</h1>
+<form class="card form form--grid" action="/api/admin/settings" data-api>
+  <% list.forEach(function (s) { %>
+    <div class="field"><label for="s-<%= s.key %>"><%= s.title %></label><input class="input" id="s-<%= s.key %>" name="<%= s.key %>" value="<%= s.value %>"></div>
+  <% }) %>
+  <div class="btn-row field--wide"><button class="btn btn--primary" type="submit">Сохранить</button></div>
+</form>
+<%- include('../partials/cab-end') %>

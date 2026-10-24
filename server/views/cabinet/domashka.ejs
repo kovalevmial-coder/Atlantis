@@ -1,0 +1,18 @@
+<%- include('../partials/cab-start', { title: 'Домашние задания', active: '/kabinet/domashka' }) %>
+<div class="cab-head">
+  <h1 class="h2">Домашние задания</h1>
+  <%- include('../partials/child-switch') %>
+</div>
+<% if (!child) { %><p class="muted">Ребёнок ещё не привязан к аккаунту.</p><% } else { %>
+<% if (!list.length) { %><p class="muted">Заданий пока нет.</p><% } %>
+<div class="hw-list">
+  <% list.forEach(function (h) { %>
+    <article class="card hw<%= h.due_date && h.due_date < today ? ' hw--past' : '' %>">
+      <div class="hw__meta"><b><%= h.group_title %></b> · занятие <%= fmt.short(h.lesson_date) %><%= h.topic ? ' · ' + h.topic : '' %><% if (h.due_date) { %> · <span class="badge">сдать до <%= fmt.short(h.due_date) %></span><% } %></div>
+      <p class="hw__text"><%= h.text %></p>
+      <% if (h.file_id) { %><a class="btn btn--ghost btn--sm" href="/files/<%= h.file_id %>" target="_blank"><i data-icon="download"></i> Файл задания</a><% } %>
+    </article>
+  <% }) %>
+</div>
+<% } %>
+<%- include('../partials/cab-end') %>

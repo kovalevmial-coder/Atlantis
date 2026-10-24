@@ -1,0 +1,37 @@
+<%- include('../partials/cab-start', { title: 'Панель директора', active: '/direktor' }) %>
+<h1 class="h2">Панель директора</h1>
+<div class="stat-grid stat-grid--4">
+  <a class="card stat stat--link" href="/direktor/ucheniki"><div class="stat__value"><%= stats.children %></div><div class="stat__label">учеников</div></a>
+  <a class="card stat stat--link" href="/direktor/gruppy"><div class="stat__value"><%= stats.groups %></div><div class="stat__label">групп, средняя загрузка <%= stats.avgLoad %>%</div></a>
+  <a class="card stat stat--link<%= stats.newRequests ? ' stat--debt' : '' %>" href="/direktor/zayavki"><div class="stat__value"><%= stats.newRequests %></div><div class="stat__label">новых заявок</div></a>
+  <a class="card stat stat--link" href="/direktor/oplaty"><div class="stat__value"><%= fmt.money(stats.monthPaid) %></div><div class="stat__label">оплачено в этом месяце</div></a>
+</div>
+<div class="grid grid--2">
+  <section class="card">
+    <h2 class="h3">Требует внимания</h2>
+    <ul class="plain-list">
+      <li><a href="/direktor/spravki">Справок на проверке: <b><%= stats.pendingNotes %></b></a></li>
+      <li><a href="/direktor/oplaty">Должников: <b><%= stats.debtors %></b> на сумму <b><%= fmt.money(stats.debtSum) %></b></a></li>
+      <li><a href="/direktor/raspisanie">Занятий без отметок за прошедшие дни: <b><%= stats.unmarked %></b></a></li>
+      <li><a href="/direktor/gruppy">Групп с загрузкой выше 90 %: <b><%= stats.overloaded %></b>, ниже 50 %: <b><%= stats.underloaded %></b></a></li>
+    </ul>
+  </section>
+  <section class="card">
+    <h2 class="h3">Быстрые действия</h2>
+    <div class="quick-grid">
+      <a class="btn btn--secondary" href="/direktor/ucheniki/new"><i data-icon="plus"></i> Ученик</a>
+      <a class="btn btn--secondary" href="/direktor/gruppy/new"><i data-icon="plus"></i> Группа</a>
+      <a class="btn btn--secondary" href="/direktor/uchitelya/new"><i data-icon="plus"></i> Учитель</a>
+      <a class="btn btn--secondary" href="/direktor/konstruktor/products/new"><i data-icon="plus"></i> Продукт</a>
+      <a class="btn btn--secondary" href="/direktor/konstruktor/branches/new"><i data-icon="plus"></i> Точка</a>
+      <a class="btn btn--secondary" href="/direktor/otchety"><i data-icon="chart"></i> Отчёт</a>
+    </div>
+  </section>
+</div>
+<section class="card">
+  <h2 class="h3">Последние действия</h2>
+  <div class="table-wrap"><table class="table">
+    <tbody><% audit.forEach(function (a) { %><tr><td class="small nowrap"><%= a.at %></td><td class="small"><%= a.who || 'система' %></td><td class="small"><%= a.action %></td></tr><% }) %></tbody>
+  </table></div>
+</section>
+<%- include('../partials/cab-end') %>

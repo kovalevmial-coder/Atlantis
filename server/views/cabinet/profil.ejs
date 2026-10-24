@@ -1,0 +1,28 @@
+<%- include('../partials/cab-start', { title: 'Профиль', active: '/' + (user.role === 'PARENT' ? 'kabinet' : user.role === 'TEACHER' ? 'uchitel' : 'direktor') + '/profil' }) %>
+<h1 class="h2">Профиль и уведомления</h1>
+<div class="grid grid--2">
+  <div class="card">
+    <h2 class="h3">Учётная запись</h2>
+    <dl class="info-list"><dt>Имя</dt><dd><%= user.full_name %></dd><dt>Почта</dt><dd><%= user.email %></dd><dt>Телефон</dt><dd><%= phone || '—' %></dd><dt>Роль</dt><dd><%= user.roleTitle %></dd></dl>
+    <a class="btn btn--secondary" href="/parol"><i data-icon="lock"></i> Сменить пароль</a>
+  </div>
+  <% if (user.role === 'PARENT' && children.length) { %>
+  <div class="card">
+    <h2 class="h3">Рейтинг на сайте</h2>
+    <p class="small muted">На сайте показываются только имя и первая буква фамилии. Без согласия ребёнок видит своё место только в кабинете.</p>
+    <% children.forEach(function (c) { %>
+      <form class="form form--inline" action="/api/children/<%= c.id %>/consent" data-api data-reload>
+        <label class="check"><input type="checkbox" name="consent" <%= c.rating_consent ? 'checked' : '' %> onchange="this.form.requestSubmit()"><span>Показывать <%= c.full_name %> в рейтинге на сайте</span></label>
+      </form>
+    <% }) %>
+  </div>
+  <% } %>
+</div>
+<section class="card">
+  <div class="cab-head"><h2 class="h3">Уведомления</h2><% if (notifications.some(function (n) { return !n.is_read; })) { %><button class="btn btn--ghost btn--sm" data-post="/api/notifications/read" data-reload>Отметить все прочитанными</button><% } %></div>
+  <% if (!notifications.length) { %><p class="muted">Уведомлений нет.</p><% } %>
+  <ul class="notice-list">
+    <% notifications.forEach(function (n) { %><li class="<%= n.is_read ? '' : 'is-new' %>"><span class="small muted"><%= fmt.short(n.created) %></span> <%= n.text %></li><% }) %>
+  </ul>
+</section>
+<%- include('../partials/cab-end') %>

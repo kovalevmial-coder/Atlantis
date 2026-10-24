@@ -1,0 +1,30 @@
+<%- include('../partials/cab-start', { title: t ? t.full_name : 'Новый учитель', active: '/direktor/uchitelya' }) %>
+<a class="small" href="/direktor/uchitelya">← Учителя</a>
+<h1 class="h2" style="margin-top:8px"><%= t ? t.full_name : 'Новый учитель' %></h1>
+<form class="card form form--grid" action="/api/admin/teachers<%= t ? '/' + t.id : '' %>" data-api enctype="multipart/form-data">
+  <h2 class="h3 field--wide">Учётная запись</h2>
+  <div class="field"><label for="t-name">ФИО *</label><input class="input" id="t-name" name="fullName" value="<%= t ? t.full_name : '' %>" required></div>
+  <div class="field"><label for="t-email">Электронная почта (логин) *</label><input class="input" id="t-email" name="email" type="email" value="<%= t ? t.email : '' %>" required<%= t ? ' readonly' : '' %>></div>
+  <div class="field"><label for="t-phone">Телефон</label><input class="input" id="t-phone" name="phone" type="tel" value="<%= t ? t.phone : '' %>"></div>
+  <div class="field"><span class="label">Точки, где работает</span>
+    <div class="checks"><% branches.forEach(function (b) { %><label class="check"><input type="checkbox" name="branches" value="<%= b.id %>"<%= t && t.branch_ids.indexOf(b.id) >= 0 ? ' checked' : '' %>><span><%= b.name %></span></label><% }) %></div></div>
+  <% if (t) { %><label class="check"><input type="checkbox" name="is_active"<%= t.is_active ? ' checked' : '' %>><span>Учётная запись активна</span></label><% } %>
+  <% if (!t) { %><p class="small muted field--wide">Система создаст временный пароль и отправит его на почту учителя. При первом входе пароль нужно сменить.</p><% } %>
+
+  <h2 class="h3 field--wide">Страница на сайте</h2>
+  <div class="field"><label for="t-slug">Адрес страницы (латиницей)</label><input class="input" id="t-slug" name="slug" value="<%= t ? t.slug || '' : '' %>" placeholder="ivanova-anna"></div>
+  <div class="field"><label for="t-pos">Должность</label><input class="input" id="t-pos" name="position" value="<%= t ? t.position || '' : '' %>" placeholder="Педагог начальных классов"></div>
+  <div class="field field--wide"><label for="t-lead">Коротко о себе</label><input class="input" id="t-lead" name="lead" value="<%= t ? t.lead || '' : '' %>" maxlength="400"></div>
+  <div class="field"><label for="t-edu">Образование</label><input class="input" id="t-edu" name="education" value="<%= t ? t.education || '' : '' %>"></div>
+  <div class="field"><label for="t-exp">Стаж, лет</label><input class="input" id="t-exp" name="experienceYears" type="number" min="0" value="<%= t && t.experience_years !== null ? t.experience_years : '' %>"></div>
+  <div class="field field--wide"><label for="t-ach">Регалии и достижения (по строке на пункт)</label><textarea class="input" id="t-ach" name="achievements" rows="5"><%= t ? (t.achievements || []).join('\n') : '' %></textarea></div>
+  <div class="field field--wide"><label for="t-motto">Девиз или цитата</label><input class="input" id="t-motto" name="motto" value="<%= t ? t.motto || '' : '' %>"></div>
+  <div class="field"><label for="t-photo">Фото</label><% if (t && (t.photo_id || t.photo_url)) { %><img class="field__preview" src="<%= t.photo_id ? '/files/' + t.photo_id : t.photo_url %>" alt=""><% } %><input class="input" id="t-photo" name="file" type="file" accept=".jpg,.jpeg,.png,.webp"></div>
+  <div class="field"><label for="t-sort">Порядок на сайте</label><input class="input" id="t-sort" name="sort" type="number" value="<%= t ? t.sort || 0 : 0 %>"></div>
+  <label class="check field--wide"><input type="checkbox" name="showOnSite"<%= !t || t.show_on_site ? ' checked' : '' %>><span>Показывать страницу на сайте</span></label>
+  <div class="btn-row field--wide">
+    <button class="btn btn--primary" type="submit">Сохранить</button>
+    <% if (t) { %><button class="btn btn--ghost" type="button" data-post="/api/admin/users/<%= t.id %>/reset" data-confirm="Сбросить пароль? Учитель получит новый временный пароль.">Сбросить пароль</button><% } %>
+  </div>
+</form>
+<%- include('../partials/cab-end') %>

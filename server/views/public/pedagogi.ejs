@@ -1,0 +1,44 @@
+<%- include('../partials/head', { title: 'Педагоги и отзывы', description: 'Педагоги развивающего центра «Атлантис»: образование, опыт, достижения.', page: 'teacher' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="/">Главная</a></li><li aria-current="page">Педагоги</li></ol>
+        <h1>Педагоги и отзывы</h1>
+        <p class="lead" style="max-width:720px;margin:0">Каждый педагог центра знает своих учеников и контролирует, как ребёнок понял тему.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="teacher-grid">
+          <% teachers.forEach(function (t) { %>
+            <a class="card card--hover teacher-card reveal" href="/pedagog/<%= t.slug %>">
+              <img class="teacher-card__photo" src="<%= t.photo %>" alt="<%= t.full_name %>" loading="lazy">
+              <div class="teacher-card__body">
+                <span class="eyebrow"><%= t.position || 'Педагог' %></span>
+                <h2 class="h3"><%= t.full_name %></h2>
+                <% if (t.lead) { %><p class="muted"><%= t.lead %></p><% } %>
+                <ul class="dir-card__meta">
+                  <% if (t.experience_years) { %><li><i data-icon="star"></i> Стаж <%= t.experience_years %> лет</li><% } %>
+                  <% if (t.education) { %><li><i data-icon="school"></i> <%= t.education %></li><% } %>
+                </ul>
+                <span class="btn btn--ghost btn--sm">Подробнее и расписание</span>
+              </div>
+            </a>
+          <% }) %>
+        </div>
+        <% if (!teachers.length) { %><p class="muted">Информация о педагогах скоро появится.</p><% } %>
+      </div>
+    </section>
+
+    <section class="section section--soft anchor-target" id="reviews-all">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Отзывы</span><h2>Что говорят родители</h2></div>
+        <div class="grid grid--2" id="reviews"></div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

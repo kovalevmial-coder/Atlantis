@@ -1,0 +1,21 @@
+<%- include('../partials/head', { title: 'Смена пароля', page: 'password' }) %>
+<%- include('../partials/header') %>
+  <main id="main">
+    <section class="section">
+      <div class="container" style="max-width:520px">
+        <div class="card">
+          <h1 class="h2">Смена пароля</h1>
+          <% if (user.must_change_password) { %>
+            <div class="alert alert--info"><i data-icon="lock"></i> <span>Вы вошли с временным паролем. Придумайте свой пароль, чтобы продолжить.</span></div>
+          <% } %>
+          <form class="form" action="/api/auth/password" data-api>
+            <div class="field"><label for="p-old"><%= user.must_change_password ? 'Временный пароль' : 'Текущий пароль' %></label><input class="input" id="p-old" name="oldPassword" type="password" autocomplete="current-password" required></div>
+            <div class="field"><label for="p-new">Новый пароль</label><input class="input" id="p-new" name="newPassword" type="password" autocomplete="new-password" minlength="8" required>
+              <span class="hint">Не меньше 8 символов, буквы и цифры.</span></div>
+            <button class="btn btn--primary btn--block" type="submit">Сохранить пароль</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+<%- include('../partials/foot-min') %>

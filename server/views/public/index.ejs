@@ -1,0 +1,162 @@
+<%- include('../partials/head', { title: 'Атлантис — подготовка к школе и помощь в учёбе в Бресте', description: 'Развивающий центр «Атлантис» в Бресте: подготовка к школе, помощь школьнику 1–6 классов, каллиграфия, английский. Группы до 10 детей.', page: 'home' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero__grid">
+        <div>
+          <span class="eyebrow reveal">Развивающий центр в Бресте · 20 лет опыта</span>
+          <h1 class="reveal" style="--delay:.05s">Подготовка к школе и помощь в учёбе 1–6 классам</h1>
+          <p class="lead reveal" style="--delay:.1s">Когда ребёнку понятно, учиться проще. А вам спокойнее. Разбираем сложные темы заранее в малых группах и контролируем, как каждый ребёнок понял материал.</p>
+          <ul class="hero__facts reveal" style="--delay:.15s">
+            <li><i data-icon="users"></i> Группы до 10 детей</li>
+            <li><i data-icon="clock"></i> 60 минут, 2 раза в неделю</li>
+            <li><i data-icon="map"></i> ул. Кривошеина, 9</li>
+          </ul>
+          <div class="btn-row reveal" style="--delay:.2s">
+            <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное</a>
+            <a class="btn btn--secondary" href="/raspisanie.html">Смотреть расписание</a>
+          </div>
+          <div class="hero__trust reveal" style="--delay:.25s">
+            <div class="trust-item"><strong data-count="20">20</strong><span>лет обучаю детей</span></div>
+            <div class="trust-item"><strong data-count="3.8" data-suffix=" тыс.">3,8 тыс.</strong><span>подписчиков в Instagram</span></div>
+            <div class="trust-item"><strong data-count="25" data-suffix="+">25+</strong><span>результатов по почерку</span></div>
+          </div>
+        </div>
+        <div class="hero__media reveal" style="--delay:.1s">
+          <img class="photo photo--hero" src="/img/pedagog.jpg" alt="Анна Александровна Ковалёва, педагог и основатель центра «Атлантис»" width="734" height="1100" fetchpriority="high">
+          <div class="hero__badge"><i data-icon="checkCircle"></i><div><strong>Набор на 2026/27</strong><br><span class="small muted">донабор в группы открыт</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="section__head"><h2 class="reveal">С чем вам помочь?</h2></div>
+        <div class="task-grid">
+          <a class="task reveal" href="/napravleniya.html#podgotovka-1"><i data-icon="school"></i><strong>5–7 лет</strong><span>Подготовка к школе</span></a>
+          <a class="task reveal" href="/napravleniya.html#klass-1"><i data-icon="book"></i><strong>1–4 класс</strong><span>Помощь школьнику</span></a>
+          <a class="task reveal" href="/napravleniya.html#matematika-5-6"><i data-icon="calc"></i><strong>5–6 класс</strong><span>Математика</span></a>
+          <a class="task reveal" href="/kalligrafiya.html"><i data-icon="pen"></i><strong>Почерк</strong><span>Каллиграфия за 8 занятий</span></a>
+          <a class="task reveal" href="/napravleniya.html#english"><i data-icon="abc"></i><strong>Английский</strong><span>1–9 класс</span></a>
+          <a class="task reveal" href="/napravleniya.html#vspomnit-vse"><i data-icon="sun"></i><strong>Лето</strong><span>Интенсивы и марафоны</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Направления</span>
+          <h2>Занятия по возрасту и задаче</h2>
+          <p class="lead">Все направления ведутся по школьной программе Беларуси, с опережением, чтобы ребёнок приходил на урок уже подготовленным.</p>
+        </div>
+        <div class="grid grid--3" id="home-dirs"></div>
+        <p style="margin-top:32px"><a class="btn btn--secondary" href="/napravleniya.html">Все направления <i data-icon="arrow"></i></a></p>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container split">
+        <div>
+          <span class="eyebrow reveal">Наша особенность</span>
+          <h2 class="reveal">Почерк до и после курса каллиграфии</h2>
+          <p class="lead reveal">Плохой почерк — это не лень. Чаще всего у ребёнка нет системы правил написания букв и соединений. За 8 занятий выстраиваем эту систему.</p>
+          <ul class="checklist reveal">
+            <li>Правильные элементы и буквы</li>
+            <li>Контроль высоты, ширины и расстояния между буквами</li>
+            <li>Подходит левшам</li>
+          </ul>
+          <a class="btn btn--primary reveal" href="/kalligrafiya.html">Подробнее о курсе</a>
+        </div>
+        <div>
+        <div class="ba reveal" style="--pos:50%">
+          <div class="ba__pane ba__before lined"><p><span>У</span> <span>белки</span> <span>есть</span> <span>длинный</span> <span>пушистый</span> <span>хвост</span></p></div>
+          <div class="ba__pane ba__after lined" aria-hidden="true"><p>У белки есть длинный пушистый хвост</p></div>
+          <span class="ba__label ba__label--before">До</span>
+          <span class="ba__label ba__label--after">После 8 занятий</span>
+          <span class="ba__handle"></span>
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнить почерк до и после курса">
+        </div>
+        <p class="ba-caption">Пример формата. Здесь будут фото тетрадей учеников (с согласия родителей).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <span class="eyebrow">Почему родители выбирают нас</span>
+          <h2>Система, а не просто занятия</h2>
+        </div>
+        <div class="grid grid--4">
+          <div class="card reveal"><div class="card__icon"><i data-icon="users"></i></div><h3>Малые группы</h3><p class="muted">До 10 детей, поэтому педагог видит каждого и успевает объяснить.</p></div>
+          <div class="card reveal"><div class="card__icon"><i data-icon="chart"></i></div><h3>Опережающее обучение</h3><p class="muted">Сложные темы разбираем заранее, до того как их пройдут в школе.</p></div>
+          <div class="card reveal"><div class="card__icon"><i data-icon="checkCircle"></i></div><h3>Контроль понимания</h3><p class="muted">Проверяем, правильно ли ребёнок понял правило и умеет ли его применять.</p></div>
+          <div class="card reveal"><div class="card__icon"><i data-icon="book"></i></div><h3>Свои пособия</h3><p class="muted">Папки «Атлантис» по классам: чтение, математика, словарные слова.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container teacher">
+        <img class="photo reveal" src="/img/pedagog-portret.jpg" alt="Анна Александровна Ковалёва, педагог центра «Атлантис»" width="668" height="846" loading="lazy">
+        <div>
+          <span class="eyebrow reveal">Ваш педагог</span>
+          <h2 class="reveal">Анна Александровна Ковалёва</h2>
+          <p class="lead reveal">20 лет обучаю детей. Помогаю подготовиться к школе, подтянуть программу и исправить почерк.</p>
+          <blockquote class="quote reveal">Простые шаги ребёнок делает сам, сложные мы преодолеваем вместе.</blockquote>
+          <a class="btn btn--secondary reveal" href="/pedagog.html">О педагоге и отзывы</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Как записаться</span><h2>Три простых шага</h2></div>
+        <ol class="steps">
+          <li class="reveal"><h3>Оставьте заявку</h3><p class="muted">На сайте, по телефону или в Instagram. Это занимает минуту.</p></li>
+          <li class="reveal"><h3>Подберём группу</h3><p class="muted">Перезвоним, уточним возраст и задачу и предложим удобное время.</p></li>
+          <li class="reveal"><h3>Пробное занятие</h3><p class="muted">Ребёнок знакомится с педагогом, а вы видите, как проходят занятия.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Рейтинг</span><h2>Лучшие ученики <%= monthTitle %></h2>
+          <p class="muted">Баллы ставит учитель после каждого занятия. В рейтинге на сайте только дети, чьи родители дали согласие.</p></div>
+        <%- include('../partials/top10', { top: top }) %>
+        <div class="btn-row" style="margin-top:24px"><a class="btn btn--secondary" href="/reyting.html">Весь рейтинг</a></div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Отзывы</span><h2>Что говорят родители</h2></div>
+        <div class="grid grid--3" id="reviews"></div>
+        <p style="margin-top:32px"><a href="/pedagog.html#reviews-all">Все отзывы</a></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Вопросы</span><h2>Частые вопросы</h2></div>
+        <div class="faq" id="faq"></div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Запишитесь на пробное занятие</h2>
+            <p>Подберём группу по возрасту и задаче ребёнка. Перезвоним в течение дня.</p>
+          </div>
+          <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное <i data-icon="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('../partials/cab-start', { title: 'Справки', active: base + '/spravki' }) %>
+<h1 class="h2">Справки о болезни</h1>
+<div class="grid grid--2-1">
+  <div><%- include('../partials/sick-list', { notes: notes, canReview: true }) %></div>
+  <section class="card">
+    <h2 class="h3">Внести справку</h2>
+    <p class="small muted">Если родитель принёс справку в центр. Справка сразу считается принятой.</p>
+    <form class="form" action="/api/sick-notes" data-api data-reload enctype="multipart/form-data">
+      <div class="field"><label for="sn-child">Ученик</label><select class="select" id="sn-child" name="childId" required><% kids.forEach(function (k) { %><option value="<%= k.id %>"><%= k.full_name %></option><% }) %></select></div>
+      <div class="field-row">
+        <div class="field"><label for="sn-from">С</label><input class="input" id="sn-from" name="dateFrom" type="date" required></div>
+        <div class="field"><label for="sn-to">По</label><input class="input" id="sn-to" name="dateTo" type="date" required></div>
+      </div>
+      <div class="field"><label for="sn-file">Скан справки</label><input class="input" id="sn-file" name="file" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" required></div>
+      <button class="btn btn--primary" type="submit">Сохранить</button>
+    </form>
+  </section>
+</div>
+<%- include('../partials/cab-end') %>

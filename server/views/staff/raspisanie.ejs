@@ -1,0 +1,21 @@
+<%- include('../partials/cab-start', { title: 'Расписание и журнал', active: base + '/raspisanie', scripts: ['/app/schedule.js'] }) %>
+<div class="cab-head">
+  <h1 class="h2">Расписание и журнал</h1>
+  <% if (user.role === 'DIRECTOR') { %>
+    <form class="form form--inline" action="/api/lessons/generate" data-api data-reload>
+      <input class="input input--sm" type="date" name="from" value="<%= from %>" aria-label="С">
+      <input class="input input--sm" type="date" name="to" value="<%= to %>" aria-label="По">
+      <button class="btn btn--secondary btn--sm" type="submit">Создать занятия по расписанию</button>
+    </form>
+  <% } %>
+</div>
+<p class="small muted">Нажмите на занятие, чтобы открыть журнал: посещаемость, справки, баллы рейтинга и домашнее задание. Расписание групп меняется в разделе «<%= user.role === 'DIRECTOR' ? 'Группы' : 'Мои группы' %>».</p>
+<% if (user.role === 'DIRECTOR') { %>
+  <%- include('../partials/schedule', { mode: 'director', searchable: true }) %>
+<% } else { %>
+  <%- include('../partials/schedule', { mode: 'teacher', searchable: false, fixedType: 'teacher', fixedId: user.id }) %>
+<% } %>
+<script>
+  document.addEventListener('lesson:open', function (e) { location.href = '<%= base %>/zhurnal/' + e.detail.id; });
+</script>
+<%- include('../partials/cab-end') %>

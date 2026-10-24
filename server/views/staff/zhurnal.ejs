@@ -1,0 +1,77 @@
+<%- include('../partials/cab-start', { title: 'Журнал занятия', active: base + '/raspisanie', scripts: ['/app/journal.js'] }) %>
+<div class="cab-head">
+  <div>
+    <a class="small" href="<%= base %>/raspisanie">← К расписанию</a>
+    <h1 class="h2" style="margin-top:8px"><span class="dot dot--lg" style="background:<%= l.color %>"></span> <%= l.group_title %></h1>
+    <p class="muted"><%= fmt.dayName(l.date) %>, <%= fmt.human(l.date) %>, <%= l.start %>–<%= l.end %> · <%= l.room %> · <%= l.teacher %>
+      · <span class="badge badge--<%= l.status === 'done' ? 'success' : l.status === 'cancelled' ? 'danger' : 'muted' %>"><%= { planned: 'запланировано', done: 'проведено', cancelled: 'отменено' }[l.status] %></span></p>
+    <% if (l.note) { %><p class="small muted"><%= l.note %></p><% } %>
+  </div>
+</div>
+
+<% if (l.status !== 'cancelled') { %>
+<form class="card journal" id="journal-form" action="/api/lessons/<%= l.id %>/journal" enctype="multipart/form-data" data-future="<%= l.date > today ? '1' : '' %>">
+  <div class="field"><label for="j-topic">Тема занятия</label><input class="input" id="j-topic" name="topic" value="<%= l.topic || '' %>" maxlength="255"></div>
+  <div class="table-wrap">
+    <table class="table journal__table">
+      <thead><tr><th>Ученик</th><th>Отметка</th><th>Баллы 0–10</th><th>Комментарий</th></tr></thead>
+      <tbody>
+        <% l.children.forEach(function (c) { var st = c.status || 'present'; %>
+          <tr data-child="<%= c.id %>">
+            <td><b><%= c.full_name %></b><% if (c.enroll_status === 'trial') { %> <span class="badge">пробное</span><% } %><% if (c.has_note) { %> <span class="badge badge--info" title="Есть принятая справка на эту дату">справка</span><% } %></td>
+            <td><div class="seg" role="radiogroup" aria-label="Отметка">
+              <% Object.keys(statuses).forEach(function (k) { %>
+                <label class="seg__item seg__item--<%= k %>"><input type="radio" name="st-<%= c.id %>" value="<%= k %>"<%= st === k ? ' checked' : '' %>><span><%= statuses[k] %></span></label>
+              <% }) %>
+            </div></td>
+            <td><input class="input input--sm input--points" type="number" min="0" max="10" step="1" name="pt-<%= c.id %>" value="<%= c.points === null || c.points === undefined ? '' : c.points %>" aria-label="Баллы"></td>
+            <td><input class="input input--sm" name="cm-<%= c.id %>" value="<%= c.comment || '' %>" maxlength="255" aria-label="Комментарий"></td>
+          </tr>
+        <% }) %>
+        <% if (!l.children.length) { %><tr><td colspan="4" class="muted">В группе нет учеников на эту дату.</td></tr><% } %>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid grid--2">
+    <div class="field"><label for="j-hw">Домашнее задание</label><textarea class="input" id="j-hw" name="homework" rows="3" maxlength="2000" placeholder="Новое задание к следующему занятию"></textarea></div>
+    <div>
+      <div class="field"><label for="j-due">Сдать до</label><input class="input" id="j-due" name="dueDate" type="date"></div>
+      <div class="field"><label for="j-file">Файл к заданию</label><input class="input" id="j-file" name="file" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf"></div>
+    </div>
+  </div>
+  <% if (l.homework.length) { %>
+    <h3 class="h4">Выданные задания</h3>
+    <ul class="plain-list">
+      <% l.homework.forEach(function (h) { %><li><%= h.text %><%= h.due_date ? ' · до ' + fmt.short(h.due_date) : '' %><% if (h.file_id) { %> · <a href="/files/<%= h.file_id %>" target="_blank">файл</a><% } %>
+        <button class="btn btn--ghost btn--sm" data-post="/api/homework/<%= h.id %>" data-method="DELETE" data-reload data-confirm="Удалить задание?">Удалить</button></li><% }) %>
+    </ul>
+  <% } %>
+  <div class="btn-row">
+    <button class="btn btn--primary" type="submit"><%= l.status === 'done' ? 'Сохранить изменения' : 'Провести занятие и сохранить' %></button>
+    <span class="small muted">После сохранения начисления оплаты считаются автоматически: «Был» и «Пропуск» оплачиваются, «По справке» и «Отработка» — нет.</span>
+  </div>
+</form>
+<% } %>
+
+<% if (l.status !== 'done') { %>
+<details class="card">
+  <summary><b>Перенести или отменить занятие</b></summary>
+  <form class="form" action="/api/lessons/<%= l.id %>/move" data-api data-reload style="margin-top:16px">
+    <div class="field-row">
+      <div class="field"><label for="m-date">Новая дата</label><input class="input" id="m-date" name="date" type="date" value="<%= l.date %>" required></div>
+      <div class="field"><label for="m-start">Начало</label><input class="input" id="m-start" name="start" type="time" value="<%= l.start %>" required></div>
+      <div class="field"><label for="m-end">Конец</label><input class="input" id="m-end" name="end" type="time" value="<%= l.end %>" required></div>
+      <div class="field"><label for="m-room">Кабинет</label><select class="select" id="m-room" name="roomId"><% rooms.forEach(function (r) { %><option value="<%= r.id %>"<%= r.name === l.room ? ' selected' : '' %>><%= r.name %></option><% }) %></select></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn--secondary" type="submit">Перенести</button>
+    </div>
+  </form>
+  <form class="form form--inline" action="/api/lessons/<%= l.id %>/move" data-api data-reload data-confirm="Отменить занятие? Родители получат уведомление.">
+    <input type="hidden" name="cancel" value="1">
+    <input class="input" name="note" placeholder="Причина отмены">
+    <button class="btn btn--ghost" type="submit">Отменить занятие</button>
+  </form>
+</details>
+<% } %>
+<%- include('../partials/cab-end') %>

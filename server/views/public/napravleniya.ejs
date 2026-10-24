@@ -1,0 +1,40 @@
+<%- include('../partials/head', { title: 'Направления — Атлантис, Брест', description: 'Подготовка к школе, помощь школьнику 1–6 классов, английский, каллиграфия, скорочтение и онлайн-курсы в центре «Атлантис».', page: 'directions' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="/">Главная</a></li><li aria-current="page">Направления</li></ol>
+        <h1>Направления</h1>
+        <p class="lead" style="max-width:720px;margin:0">Выберите возраст или задачу, и мы покажем подходящие занятия. Не знаете, что выбрать? Оставьте заявку, и мы поможем.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="chips" id="dir-filter" aria-label="Фильтр направлений"></div>
+        <div class="grid grid--3" id="dir-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section__head"><h2>Подробнее о каждом направлении</h2></div>
+        <div id="dir-details"></div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Запишитесь на пробное занятие</h2>
+            <p>Подберём группу по возрасту и задаче ребёнка. Перезвоним в течение дня.</p>
+          </div>
+          <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное <i data-icon="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

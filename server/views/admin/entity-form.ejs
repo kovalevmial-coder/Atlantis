@@ -1,0 +1,10 @@
+<%- include('../partials/cab-start', { title: (row ? 'Изменить ' : 'Добавить ') + e.one, active: '/direktor/konstruktor' }) %>
+<a class="small" href="/direktor/konstruktor/<%= name %>">← <%= e.title %></a>
+<h1 class="h2" style="margin-top:8px"><%= row ? 'Изменить ' + e.one : 'Добавить ' + e.one %></h1>
+<form class="card form form--grid" action="/api/admin/<%= name %><%= row ? '/' + row.id : '' %>" data-api enctype="multipart/form-data">
+  <% e.fields.forEach(function (f) { %>
+    <%- include('../partials/field', { f: f, val: row ? row[f.name] : null, options: refs[f.name] }) %>
+  <% }) %>
+  <div class="btn-row field--wide"><button class="btn btn--primary" type="submit">Сохранить</button><a class="btn btn--ghost" href="/direktor/konstruktor/<%= name %>">Отмена</a></div>
+</form>
+<%- include('../partials/cab-end') %>

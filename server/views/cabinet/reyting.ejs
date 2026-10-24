@@ -1,0 +1,22 @@
+<%- include('../partials/cab-start', { title: 'Рейтинг', active: '/kabinet/reyting' }) %>
+<div class="cab-head">
+  <h1 class="h2">Рейтинг</h1>
+  <%- include('../partials/child-switch', { keep: { month: month } }) %>
+</div>
+<% if (!child) { %><p class="muted">Ребёнок ещё не привязан к аккаунту.</p><% } else { %>
+<div class="month-switch">
+  <a class="btn btn--ghost btn--sm" href="?child=<%= child.id %>&month=<%= prevMonth %>">←</a>
+  <strong><%= monthName %></strong>
+  <a class="btn btn--ghost btn--sm" href="?child=<%= child.id %>&month=<%= nextMonth %>">→</a>
+</div>
+<% if (!mine.length) { %><p class="muted">В этом месяце у ребёнка ещё нет баллов.</p><% } %>
+<div class="stat-grid">
+  <% mine.forEach(function (r) { %>
+    <div class="card stat"><div class="stat__value"><%= r.place %> <small>из <%= r.of %></small></div><div class="stat__label"><%= r.product %>: <%= r.points %> баллов, <%= r.visits %> занятий</div></div>
+  <% }) %>
+</div>
+<p class="small muted"><%= child.rating_consent ? 'Ребёнок участвует в публичном рейтинге на сайте (имя и первая буква фамилии).' : 'Ребёнок не показывается в рейтинге на сайте. Включить показ можно в профиле.' %></p>
+<h2 class="h3">Топ-10 на сайте</h2>
+<%- include('../partials/top10', { top: top }) %>
+<% } %>
+<%- include('../partials/cab-end') %>

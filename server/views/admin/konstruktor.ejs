@@ -1,0 +1,13 @@
+<%- include('../partials/cab-start', { title: 'Конструктор', active: '/direktor/konstruktor' }) %>
+<h1 class="h2">Конструктор</h1>
+<p class="muted">Всё, что меняется в работе центра, настраивается здесь, без правки кода. Изменения сразу видны на сайте и в кабинетах.</p>
+<div class="kons-grid">
+  <a class="card card--hover kons" href="/direktor/uchitelya"><i data-icon="book"></i><b>Учителя</b><span class="small muted">учётные записи и страницы на сайте</span></a>
+  <a class="card card--hover kons" href="/direktor/ucheniki"><i data-icon="heart"></i><b>Ученики</b><span class="small muted">дети, родители, льготы, запись в группы</span></a>
+  <a class="card card--hover kons" href="/direktor/gruppy"><i data-icon="users"></i><b>Группы</b><span class="small muted">состав, расписание, цена</span></a>
+  <% Object.keys(entities).forEach(function (k) { var e = entities[k]; %>
+    <a class="card card--hover kons" href="/direktor/konstruktor/<%= k %>"><i data-icon="<%= e.icon %>"></i><b><%= e.title %></b><span class="small muted"><%= counts[k] %> записей</span></a>
+  <% }) %>
+  <a class="card card--hover kons" href="/direktor/nastroiki"><i data-icon="settings"></i><b>Настройки сайта</b><span class="small muted">название, контакты, часы работы</span></a>
+</div>
+<%- include('../partials/cab-end') %>

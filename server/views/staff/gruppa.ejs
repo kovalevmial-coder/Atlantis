@@ -1,0 +1,72 @@
+<%- include('../partials/cab-start', { title: g.title, active: base + '/gruppy' }) %>
+<a class="small" href="<%= base %>/gruppy">← Все группы</a>
+<div class="cab-head">
+  <div><h1 class="h2" style="margin-top:8px"><span class="dot dot--lg" style="background:<%= g.color %>"></span> <%= g.title %></h1>
+    <p class="muted"><%= g.product %> · <%= g.branch %> · <%= g.teacher %> · <%= fmt.short(g.start_date) %> – <%= fmt.short(g.end_date) %> · <%= fmt.money(g.price_effective) %> за занятие<%= g.is_active ? '' : ' · группа закрыта' %></p></div>
+  <div class="btn-row">
+    <a class="btn btn--ghost btn--sm" href="/raspisanie.html?group=<%= g.id %>" target="_blank">Расписание на сайте</a>
+    <% if (user.role === 'DIRECTOR') { %><a class="btn btn--secondary btn--sm" href="/direktor/gruppy/<%= g.id %>/edit"><i data-icon="edit"></i> Изменить группу</a><% } %>
+  </div>
+</div>
+
+<div class="grid">
+  <section class="card">
+    <h2 class="h3">Расписание группы</h2>
+    <p class="small muted">Система проверяет, не занят ли кабинет и учитель в это время. Занятия на 8 недель вперёд создаются автоматически.</p>
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>День</th><th>Время</th><th>Кабинет</th><th></th></tr></thead>
+      <tbody>
+      <% slots.forEach(function (s) { %>
+        <tr>
+          <td><%= fmt.dayNames[s.weekday] %></td><td><%= s.start %>–<%= s.end %></td><td><%= s.room %></td>
+          <td class="nowrap"><button class="btn btn--ghost btn--sm" data-post="/api/slots/<%= s.id %>" data-method="DELETE" data-reload data-confirm="Удалить это время из расписания? Будущие незаполненные занятия будут удалены.">Удалить</button></td>
+        </tr>
+      <% }) %>
+      <% if (!slots.length) { %><tr><td colspan="4" class="muted">Расписание не задано.</td></tr><% } %>
+      </tbody>
+    </table></div>
+    <form class="form" action="/api/slots" data-api data-reload>
+      <input type="hidden" name="groupId" value="<%= g.id %>">
+      <div class="field-row">
+        <div class="field"><label for="s-day">День</label><select class="select" id="s-day" name="weekday"><% [1,2,3,4,5,6,7].forEach(function (d) { %><option value="<%= d %>"><%= fmt.dayNames[d] %></option><% }) %></select></div>
+        <div class="field"><label for="s-start">Начало</label><input class="input" id="s-start" name="start" type="time" required></div>
+        <div class="field"><label for="s-end">Конец</label><input class="input" id="s-end" name="end" type="time" required></div>
+        <div class="field"><label for="s-room">Кабинет</label><select class="select" id="s-room" name="roomId"><% rooms.forEach(function (r) { %><option value="<%= r.id %>"><%= r.name %></option><% }) %></select></div>
+      </div>
+      <button class="btn btn--primary btn--sm" type="submit"><i data-icon="plus"></i> Добавить время</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2 class="h3">Ученики (<%= kids.filter(function (k) { return k.status !== 'waiting'; }).length %> из <%= g.capacity %>)</h2>
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Ученик</th><th>Статус</th><th>Баланс</th><% if (user.role === 'DIRECTOR') { %><th></th><% } %></tr></thead>
+      <tbody>
+      <% kids.forEach(function (k) { %>
+        <tr>
+          <td><b><%= k.full_name %></b><br><span class="small muted"><%= k.parent || 'родитель не привязан' %><%= k.parent_phone ? ' · ' + k.parent_phone : '' %><%= k.benefit ? ' · ' + k.benefit : '' %></span></td>
+          <td><%= { active: 'занимается', trial: 'пробное', waiting: 'лист ожидания' }[k.status] %></td>
+          <td class="<%= k.balance < 0 ? 'text-danger' : '' %>"><%= fmt.money(k.balance) %></td>
+          <% if (user.role === 'DIRECTOR') { %><td class="nowrap">
+            <% if (k.status === 'trial') { %><button class="btn btn--ghost btn--sm" data-post="/api/enrollments/<%= k.enrollment_id %>/status" data-body='{"status":"active"}' data-reload>В группу</button><% } %>
+            <button class="btn btn--ghost btn--sm" data-post="/api/enrollments/<%= k.enrollment_id %>/finish" data-reload data-confirm="Отчислить из группы? Первый из листа ожидания займёт место автоматически."><%= k.status === 'waiting' ? 'Убрать' : 'Отчислить' %></button>
+          </td><% } %>
+        </tr>
+      <% }) %>
+      <% if (!kids.length) { %><tr><td colspan="4" class="muted">В группе пока нет учеников.</td></tr><% } %>
+      </tbody>
+    </table></div>
+    <% if (user.role === 'DIRECTOR') { %>
+      <form class="form" action="/api/enrollments" data-api data-reload>
+        <input type="hidden" name="groupId" value="<%= g.id %>">
+        <div class="field-row">
+          <div class="field" style="flex:2"><label for="e-child">Записать ученика</label><select class="select" id="e-child" name="childId" required><option value="">Выберите ученика</option><% allChildren.forEach(function (c) { %><option value="<%= c.id %>"><%= c.full_name %></option><% }) %></select></div>
+          <div class="field"><label for="e-status">Как</label><select class="select" id="e-status" name="status"><option value="active">в группу</option><option value="trial">на пробное</option></select></div>
+        </div>
+        <button class="btn btn--primary btn--sm" type="submit">Записать</button>
+        <span class="small muted">Если мест нет, ученик встанет в лист ожидания.</span>
+      </form>
+    <% } %>
+  </section>
+</div>
+<%- include('../partials/cab-end') %>

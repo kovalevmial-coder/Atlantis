@@ -1,0 +1,35 @@
+<%- include('../partials/cab-start', { title: 'Отчёты', active: base + '/otchety' }) %>
+<div class="cab-head">
+  <h1 class="h2">Отчёты</h1>
+  <a class="btn btn--primary" href="<%= base %>/otchety.xlsx?from=<%= rep.from %>&to=<%= rep.to %><%= branchId ? '&branch=' + branchId : '' %>"><i data-icon="download"></i> Скачать Excel</a>
+</div>
+<form class="month-switch" method="get">
+  <input class="input input--sm" type="date" name="from" value="<%= rep.from %>"> – <input class="input input--sm" type="date" name="to" value="<%= rep.to %>">
+  <% if (branches) { %><select class="select select--sm" name="branch"><option value="">Все точки</option><% branches.forEach(function (b) { %><option value="<%= b.id %>"<%= String(b.id) === String(branchId) ? ' selected' : '' %>><%= b.name %></option><% }) %></select><% } %>
+  <button class="btn btn--ghost btn--sm" type="submit">Показать</button>
+</form>
+<div class="stat-grid">
+  <div class="card stat"><div class="stat__value"><%= fmt.money(rep.total.paid) %></div><div class="stat__label">оплачено за период</div></div>
+  <div class="card stat"><div class="stat__value"><%= fmt.money(rep.total.charged) %></div><div class="stat__label">начислено за занятия</div></div>
+  <div class="card stat"><div class="stat__value"><%= rep.total.sickFree %></div><div class="stat__label">занятий не оплачивается по справке</div></div>
+</div>
+<div class="grid grid--2">
+  <section><h2 class="h3">По учителям</h2>
+    <div class="table-wrap"><table class="table"><thead><tr><th>Учитель</th><th>Начислено</th><th>Оплачено</th></tr></thead>
+    <tbody><% rep.byTeacher.forEach(function (r) { %><tr><td><%= r.name %></td><td><%= fmt.money(r.charged) %></td><td><%= fmt.money(r.paid) %></td></tr><% }) %></tbody></table></div>
+  </section>
+  <section><h2 class="h3">По способам оплаты</h2>
+    <div class="table-wrap"><table class="table"><thead><tr><th>Способ</th><th>Сумма</th></tr></thead>
+    <tbody><% rep.byMethod.forEach(function (r) { %><tr><td><%= r.name %></td><td><%= fmt.money(r.paid) %></td></tr><% }) %></tbody></table></div>
+    <% if (rep.byBranch.length > 1) { %><h2 class="h3">По точкам</h2>
+    <div class="table-wrap"><table class="table"><thead><tr><th>Точка</th><th>Начислено</th><th>Оплачено</th></tr></thead>
+    <tbody><% rep.byBranch.forEach(function (r) { %><tr><td><%= r.name %></td><td><%= fmt.money(r.charged) %></td><td><%= fmt.money(r.paid) %></td></tr><% }) %></tbody></table></div><% } %>
+  </section>
+</div>
+<h2 class="h3">По группам</h2>
+<div class="table-wrap"><table class="table"><thead><tr><th>Группа</th><th>Учитель</th><th>Начислено</th><th>Оплачено</th><th>По справке</th></tr></thead>
+<tbody><% rep.byGroup.forEach(function (r) { %><tr><td><%= r.title %></td><td class="small"><%= r.teacher %></td><td><%= fmt.money(r.charged) %></td><td><%= fmt.money(r.paid) %></td><td><%= r.sick_free %></td></tr><% }) %></tbody></table></div>
+<h2 class="h3">Посещаемость</h2>
+<div class="table-wrap"><table class="table"><thead><tr><th>Группа</th><th>Занятий</th><th>Был</th><th>Пропуск</th><th>По справке</th><th>Отработка</th></tr></thead>
+<tbody><% att.forEach(function (r) { %><tr><td><%= r.title %></td><td><%= r.lessons %></td><td><%= r.present %></td><td><%= r.absent %></td><td><%= r.sick %></td><td><%= r.excused %></td></tr><% }) %></tbody></table></div>
+<%- include('../partials/cab-end') %>

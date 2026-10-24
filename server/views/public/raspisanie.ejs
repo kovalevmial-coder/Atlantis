@@ -1,0 +1,15 @@
+<%- include('../partials/head', { title: 'Расписание занятий', description: 'Расписание групп и учителей центра «Атлантис» по неделям.', page: 'schedule-iis', scripts: ['/app/schedule.js'] }) %>
+<%- include('../partials/header') %>
+
+  <main id="main" class="sch-page">
+    <div class="container container--wide">
+      <ol class="breadcrumbs"><li><a href="/">Главная</a></li><li aria-current="page">Расписание</li></ol>
+      <%- include('../partials/schedule', { mode: 'public', searchable: true }) %>
+      <div class="legend sch-legend">
+        <span>Цвет полосы слева — направление. В карточке: кабинет, учитель, свободные места.</span>
+        <a class="btn btn--primary btn--sm" href="#signup" data-signup>Записаться на пробное</a>
+      </div>
+    </div>
+  </main>
+
+<%- include('../partials/footer') %>

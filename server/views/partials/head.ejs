@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %><%= title.includes('Атлантис') ? '' : ' — Атлантис' %></title>
+  <% if (typeof description !== 'undefined') { %><meta name="description" content="<%= description %>"><% } %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/data.js" defer></script>
+  <script src="/js/ui.js" defer></script>
+  <script src="/js/pages.js" defer></script>
+  <script src="/app/app.js" defer></script>
+  <% (typeof scripts !== 'undefined' ? scripts : []).forEach(function (s) { %><script src="<%= s %>" defer></script>
+  <% }) %>
+</head>
+<body data-page="<%= page %>"<% if (user) { %> data-role="<%= user.role %>"<% } %>>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>

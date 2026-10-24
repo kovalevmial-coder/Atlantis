@@ -1,0 +1,126 @@
+<%- include('../partials/head', { title: 'Каллиграфия и исправление почерка — Атлантис, Брест', description: 'Курс каллиграфии для 1–8 классов: красивый и разборчивый почерк за 8 занятий. Очно в Бресте и онлайн.', page: 'calligraphy' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero__grid">
+        <div>
+          <ol class="breadcrumbs reveal"><li><a href="/">Главная</a></li><li aria-current="page">Каллиграфия</li></ol>
+          <h1 class="reveal">Красивый и разборчивый почерк за 8 занятий</h1>
+          <p class="lead reveal">Курс каллиграфии и исправления почерка для 1–8 классов. Устали от замечаний в тетради? Это не лень, ребёнку нужна другая подача.</p>
+          <ul class="hero__facts reveal">
+            <li><i data-icon="users"></i> Группа до 8 детей</li>
+            <li><i data-icon="clock"></i> 8 занятий по 60 минут</li>
+            <li><i data-icon="pen"></i> Подходит левшам</li>
+          </ul>
+          <div class="btn-row reveal">
+            <a class="btn btn--primary" href="#signup" data-signup data-dir="kalligrafiya">Записаться на курс</a>
+            <a class="btn btn--secondary" href="#online">Онлайн-курс</a>
+          </div>
+        </div>
+        <div class="reveal">
+        <div class="ba reveal" style="--pos:50%">
+          <div class="ba__pane ba__before lined"><p><span>У</span> <span>белки</span> <span>есть</span> <span>длинный</span> <span>пушистый</span> <span>хвост</span></p></div>
+          <div class="ba__pane ba__after lined" aria-hidden="true"><p>У белки есть длинный пушистый хвост</p></div>
+          <span class="ba__label ba__label--before">До</span>
+          <span class="ba__label ba__label--after">После 8 занятий</span>
+          <span class="ba__handle"></span>
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнить почерк до и после курса">
+        </div>
+        <p class="ba-caption">Пример формата. Здесь будут фото тетрадей учеников (с согласия родителей).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container split split--top">
+        <div class="reveal">
+          <span class="eyebrow">Почему почерк плохой</span>
+          <h2>Дело не в старании</h2>
+          <ul class="checklist">
+            <li>Нет системы знаний о правилах написания букв и соединений</li>
+            <li>Ребёнок не применяет правила на практике</li>
+            <li>Неправильный захват ручки и посадка</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <span class="eyebrow">Чему научится ребёнок</span>
+          <h2>Результат курса</h2>
+          <ul class="checklist">
+            <li>Правильно писать элементы букв и сами буквы</li>
+            <li>Понимать, что одинаковые элементы пишутся одинаково</li>
+            <li>Контролировать высоту, ширину букв и расстояние между ними</li>
+            <li>Закреплять навык дома по нашим рекомендациям</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Результаты учеников</span><h2>До и после курса</h2><p class="lead">Одна и та же контрольная фраза до первого и после последнего занятия.</p></div>
+        <div class="grid grid--3">
+          <div class="ph reveal"><span>Фото: тетрадь до / после, 2 класс</span></div>
+          <div class="ph reveal"><span>Фото: тетрадь до / после, 4 класс</span></div>
+          <div class="ph reveal"><span>Фото: тетрадь до / после, 5 класс</span></div>
+          <div class="ph reveal"><span>Фото: тетрадь до / после, 7 лет</span></div>
+          <div class="ph reveal"><span>Фото: тетрадь до / после, 9 лет</span></div>
+          <div class="ph reveal"><span>Фото: тетрадь до / после, 10 лет</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft anchor-target" id="online">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Онлайн</span><h2>Видеокурс «Каллиграфия»</h2><p class="lead">Для тех, кто живёт не в Бресте, кому тяжело добираться или мало свободного времени. 8 видеоуроков по 5–15 минут и 4 бонусных видео, задания печатаются на обычной бумаге A4.</p></div>
+        <div class="grid grid--3">
+          <article class="card price-card reveal">
+            <h3>«Я сам»</h3>
+            <div class="price-card__value">— <small>цена уточняется</small></div>
+            <ul class="checklist"><li>8 видеоуроков и 4 бонусных видео</li><li>Задания и домашние задания</li><li>Занятия в своём темпе</li></ul>
+            <button class="btn btn--secondary btn--block" type="button" data-signup data-dir="videokurs">Выбрать тариф</button>
+          </article>
+          <article class="card price-card reveal">
+            <h3>«Группа»</h3>
+            <div class="price-card__value">— <small>цена уточняется</small></div>
+            <ul class="checklist"><li>Всё из тарифа «Я сам»</li><li>Проверка заданий в групповом чате</li><li>Поддержка педагога</li></ul>
+            <button class="btn btn--secondary btn--block" type="button" data-signup data-dir="videokurs">Выбрать тариф</button>
+          </article>
+          <article class="card price-card price-card--featured reveal">
+            <h3>«Индивидуальный»</h3>
+            <div class="price-card__value">200 <small>BYN</small></div>
+            <ul class="checklist"><li>Всё из тарифа «Группа»</li><li>Индивидуальный разбор в аудио или видео</li><li>Созвон с педагогом 45–60 минут</li></ul>
+            <button class="btn btn--primary btn--block" type="button" data-signup data-dir="videokurs">Выбрать тариф</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><span class="eyebrow">Отзывы</span><h2>Отзывы о курсе</h2></div>
+        <div class="grid grid--3" id="reviews"></div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section__head"><h2>Вопросы о курсе</h2></div>
+        <div class="faq" id="faq"></div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Запишитесь на пробное занятие</h2>
+            <p>Подберём группу по возрасту и задаче ребёнка. Перезвоним в течение дня.</p>
+          </div>
+          <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное <i data-icon="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

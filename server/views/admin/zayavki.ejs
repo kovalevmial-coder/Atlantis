@@ -1,0 +1,25 @@
+<%- include('../partials/cab-start', { title: 'Заявки', active: '/direktor/zayavki' }) %>
+<h1 class="h2">Заявки с сайта</h1>
+<% var ST = { new: 'новая', in_work: 'в работе', done: 'обработана', rejected: 'отклонена' }; %>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Дата</th><th>Родитель</th><th>Ребёнок</th><th>Направление</th><th>Статус</th><th></th></tr></thead>
+  <tbody>
+  <% list.forEach(function (r) { %>
+    <tr class="<%= r.status === 'new' ? 'is-new' : '' %>">
+      <td class="small nowrap"><%= r.created %></td><td><b><%= r.parent_name %></b><br><a href="tel:<%= r.phone %>"><%= r.phone %></a></td>
+      <td><%= r.child_age || '' %></td><td class="small"><%= r.product || 'помочь подобрать' %></td>
+      <td><span class="badge<%= r.status === 'new' ? ' badge--warning' : '' %>"><%= ST[r.status] %></span><% if (r.comment) { %><br><span class="small muted"><%= r.comment %></span><% } %></td>
+      <td>
+        <form class="form form--inline" action="/api/admin/requests/<%= r.id %>" data-api data-reload>
+          <select class="select select--sm" name="status"><% Object.keys(ST).forEach(function (k) { %><option value="<%= k %>"<%= r.status === k ? ' selected' : '' %>><%= ST[k] %></option><% }) %></select>
+          <input class="input input--sm" name="comment" value="<%= r.comment || '' %>" placeholder="комментарий">
+          <button class="btn btn--ghost btn--sm" type="submit">Сохранить</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  <% if (!list.length) { %><tr><td colspan="6" class="muted">Заявок нет.</td></tr><% } %>
+  </tbody>
+</table></div>
+<p class="small muted">После пробного занятия создайте ученика в разделе «Ученики»: там же создаётся кабинет родителя с временным паролем.</p>
+<%- include('../partials/cab-end') %>

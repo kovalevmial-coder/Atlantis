@@ -1,0 +1,9 @@
+<% if (children.length > 1) { %>
+  <form class="child-switch" method="get">
+    <% Object.keys(typeof keep !== 'undefined' ? keep : {}).forEach(function (k) { %><input type="hidden" name="<%= k %>" value="<%= keep[k] %>"><% }) %>
+    <label for="child-select" class="small muted">Ребёнок</label>
+    <select class="select select--sm" id="child-select" name="child" onchange="this.form.submit()">
+      <% children.forEach(function (c) { %><option value="<%= c.id %>"<%= c.id === child.id ? ' selected' : '' %>><%= c.full_name %></option><% }) %>
+    </select>
+  </form>
+<% } %>

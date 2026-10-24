@@ -1,0 +1,19 @@
+<%- include('../partials/cab-start', { title: 'Ученики', active: '/direktor/ucheniki' }) %>
+<div class="cab-head"><h1 class="h2">Ученики</h1><a class="btn btn--primary" href="/direktor/ucheniki/new"><i data-icon="plus"></i> Добавить ученика</a></div>
+<form class="month-switch" method="get"><input class="input input--sm" name="q" value="<%= q %>" placeholder="Поиск по ФИО ребёнка или родителя"><button class="btn btn--ghost btn--sm" type="submit">Найти</button></form>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Ученик</th><th>Родитель</th><th>Группы</th><th>Льгота</th><th>Баланс</th><th></th></tr></thead>
+  <tbody>
+  <% list.forEach(function (c) { %>
+    <tr<%= c.is_active ? '' : ' class="is-muted"' %>>
+      <td><b><%= c.full_name %></b><br><span class="small muted"><%= c.age !== null ? c.age + ' лет' : '' %><%= c.grade ? ' · ' + c.grade : '' %></span></td>
+      <td class="small"><%= c.parent || '—' %><br><%= c.parent_phone || '' %></td>
+      <td class="small"><%= c.groups || '—' %></td><td class="small"><%= c.benefit || '' %></td>
+      <td class="<%= c.balance < 0 ? 'text-danger' : '' %>"><%= fmt.money(c.balance) %></td>
+      <td><a class="btn btn--ghost btn--sm" href="/direktor/ucheniki/<%= c.id %>"><i data-icon="edit"></i> Открыть</a></td>
+    </tr>
+  <% }) %>
+  <% if (!list.length) { %><tr><td colspan="6" class="muted">Учеников не найдено.</td></tr><% } %>
+  </tbody>
+</table></div>
+<%- include('../partials/cab-end') %>

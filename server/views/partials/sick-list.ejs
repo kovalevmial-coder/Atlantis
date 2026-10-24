@@ -1,0 +1,18 @@
+<% var ST = { pending: ['На проверке', 'warning'], accepted: ['Принята', 'success'], rejected: ['Отклонена', 'danger'] }; %>
+<% if (!notes.length) { %><p class="muted">Справок нет.</p><% } %>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Ребёнок</th><th>Период</th><th>Статус</th><th>Файл</th><% if (canReview) { %><th></th><% } %></tr></thead>
+  <tbody>
+  <% notes.forEach(function (n) { %>
+    <tr>
+      <td><%= n.full_name %></td><td><%= fmt.short(n.date_from) %> – <%= fmt.short(n.date_to) %><% if (n.comment) { %><br><span class="small muted"><%= n.comment %></span><% } %></td>
+      <td><span class="badge badge--<%= ST[n.status][1] %>"><%= ST[n.status][0] %></span></td>
+      <td><% if (n.file_id) { %><a href="/files/<%= n.file_id %>" target="_blank">открыть</a><% } %></td>
+      <% if (canReview) { %><td class="nowrap"><% if (n.status === 'pending') { %>
+        <button class="btn btn--primary btn--sm" data-post="/api/sick-notes/<%= n.id %>/accept" data-reload>Принять</button>
+        <button class="btn btn--ghost btn--sm" data-post="/api/sick-notes/<%= n.id %>/reject" data-reload data-confirm="Отклонить справку?">Отклонить</button>
+      <% } %></td><% } %>
+    </tr>
+  <% }) %>
+  </tbody>
+</table></div>

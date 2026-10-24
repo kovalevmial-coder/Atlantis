@@ -1,0 +1,48 @@
+<%- include('../partials/cab-start', { title: c ? c.full_name : 'Новый ученик', active: '/direktor/ucheniki' }) %>
+<a class="small" href="/direktor/ucheniki">← Ученики</a>
+<h1 class="h2" style="margin-top:8px"><%= c ? c.full_name : 'Новый ученик' %></h1>
+<div class="grid grid--2-1">
+<form class="card form form--grid" action="/api/admin/children<%= c ? '/' + c.id : '' %>" data-api>
+  <h2 class="h3 field--wide">Ребёнок</h2>
+  <div class="field field--wide"><label for="c-name">ФИО ребёнка *</label><input class="input" id="c-name" name="fullName" value="<%= c ? c.full_name : '' %>" required></div>
+  <div class="field"><label for="c-birth">Дата рождения</label><input class="input" id="c-birth" name="birthDate" type="date" value="<%= c ? c.birth_date : '' %>"></div>
+  <div class="field"><label for="c-grade">Класс</label><input class="input" id="c-grade" name="grade" value="<%= c ? c.grade || '' : '' %>" placeholder="например, 1 класс"></div>
+  <div class="field"><label for="c-benefit">Льгота</label><select class="select" id="c-benefit" name="benefitId"><option value="">нет</option><% benefits.forEach(function (b) { %><option value="<%= b.id %>"<%= c && c.benefit_id === b.id ? ' selected' : '' %>><%= b.title %> (−<%= b.discount_pct %>%)</option><% }) %></select></div>
+  <div class="field field--wide"><label for="c-note">Примечание</label><input class="input" id="c-note" name="note" value="<%= c ? c.note || '' : '' %>" maxlength="500"></div>
+  <label class="check field--wide"><input type="checkbox" name="ratingConsent"<%= c && c.rating_consent ? ' checked' : '' %>><span>Родитель согласен на показ в рейтинге на сайте</span></label>
+  <% if (c) { %><label class="check field--wide"><input type="checkbox" name="isActive"<%= c.is_active ? ' checked' : '' %>><span>Занимается в центре</span></label><% } %>
+
+  <h2 class="h3 field--wide">Родитель</h2>
+  <div class="field field--wide"><label for="c-parent">Существующий родитель</label>
+    <select class="select" id="c-parent" name="parentId"><option value="">— создать нового или оставить без родителя —</option>
+      <% parents.forEach(function (p) { %><option value="<%= p.id %>"<%= c && c.parent_id === p.id ? ' selected' : '' %>><%= p.full_name %> (<%= p.email %>)</option><% }) %></select></div>
+  <div class="field"><label for="c-pname">Новый родитель: ФИО</label><input class="input" id="c-pname" name="parentName"></div>
+  <div class="field"><label for="c-pphone">Телефон</label><input class="input" id="c-pphone" name="parentPhone" type="tel"></div>
+  <div class="field field--wide"><label for="c-pemail">Электронная почта</label><input class="input" id="c-pemail" name="parentEmail" type="email">
+    <span class="hint">Если указать почту, система создаст родителю кабинет с временным паролем и отправит его на почту.</span></div>
+  <div class="btn-row field--wide"><button class="btn btn--primary" type="submit">Сохранить</button></div>
+</form>
+<% if (c) { %>
+<div>
+  <section class="card">
+    <h2 class="h3">Группы</h2>
+    <ul class="plain-list">
+      <% enrollments.forEach(function (e) { %><li><a href="/direktor/gruppy/<%= e.group_id %>"><%= e.title %></a> · <%= { active: 'занимается', trial: 'пробное', waiting: 'лист ожидания', finished: 'отчислен' }[e.status] %><%= e.status === 'finished' ? '' : '' %></li><% }) %>
+      <% if (!enrollments.length) { %><li class="muted">Не записан в группы.</li><% } %>
+    </ul>
+    <form class="form" action="/api/enrollments" data-api data-reload>
+      <input type="hidden" name="childId" value="<%= c.id %>">
+      <div class="field"><label for="ce-group">Записать в группу</label><select class="select" id="ce-group" name="groupId" required><option value="">Выберите группу</option><% groups.forEach(function (g) { %><option value="<%= g.id %>"><%= g.title %> (<%= g.taken %>/<%= g.capacity %>)</option><% }) %></select></div>
+      <div class="field"><label for="ce-price">Индивидуальная цена занятия, руб.</label><input class="input" id="ce-price" name="price" type="number" step="0.01" min="0" placeholder="как у группы"></div>
+      <select class="select" name="status"><option value="active">в группу</option><option value="trial">на пробное</option></select>
+      <button class="btn btn--primary btn--sm" type="submit" style="margin-top:8px">Записать</button>
+    </form>
+  </section>
+  <section class="card">
+    <h2 class="h3">Баланс: <span class="<%= bal.balance < 0 ? 'text-danger' : '' %>"><%= fmt.money(bal.balance) %></span></h2>
+    <p class="small muted">Оплачено <%= fmt.money(bal.paid) %>, начислено <%= fmt.money(bal.charged) %>.</p>
+  </section>
+</div>
+<% } %>
+</div>
+<%- include('../partials/cab-end') %>

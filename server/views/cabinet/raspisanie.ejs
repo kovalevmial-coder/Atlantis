@@ -1,0 +1,4 @@
+<%- include('../partials/cab-start', { title: 'Расписание', active: '/kabinet/raspisanie', scripts: ['/app/schedule.js'] }) %>
+<%- include('../partials/schedule', { mode: 'parent', searchable: false, fixedType: 'parent', fixedId: user.id }) %>
+<p class="small muted">Здесь занятия всех групп ваших детей. Общее расписание центра — на странице <a href="/raspisanie.html">«Расписание»</a>.</p>
+<%- include('../partials/cab-end') %>

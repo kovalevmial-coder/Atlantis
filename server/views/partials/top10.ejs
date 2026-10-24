@@ -1,0 +1,21 @@
+<%# Топ-10 учеников месяца по направлениям; показываются только дети с согласием родителей %>
+<% if (top && top.products.length) { %>
+  <div class="rating-grid">
+    <% top.products.forEach(function (p) { %>
+      <div class="card rating-card reveal">
+        <h3><%= p.product %></h3>
+        <ol class="rating-list">
+          <% p.items.forEach(function (r) { %>
+            <li class="rating-list__item<%= r.place <= 3 ? ' rating-list__item--top' : '' %>">
+              <span class="rating-list__place"><%= r.place %></span>
+              <span class="rating-list__name"><%= r.name %></span>
+              <span class="rating-list__points"><%= r.points %> <small>балл.</small></span>
+            </li>
+          <% }) %>
+        </ol>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="muted">Рейтинг за этот месяц ещё формируется: баллы появятся после первых занятий.</p>
+<% } %>

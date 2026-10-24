@@ -1,0 +1,51 @@
+<%- include('../partials/cab-start', { title: 'Посещаемость', active: '/kabinet/poseshchaemost' }) %>
+<div class="cab-head">
+  <h1 class="h2">Посещаемость</h1>
+  <%- include('../partials/child-switch', { keep: { month: month } }) %>
+</div>
+<% if (!child) { %><p class="muted">Ребёнок ещё не привязан к аккаунту.</p><% } else { %>
+<div class="month-switch">
+  <a class="btn btn--ghost btn--sm" href="?child=<%= child.id %>&month=<%= prevMonth %>">←</a>
+  <strong><%= monthName %></strong>
+  <a class="btn btn--ghost btn--sm" href="?child=<%= child.id %>&month=<%= nextMonth %>">→</a>
+</div>
+<div class="grid grid--2">
+  <div class="card">
+    <div class="attendance">
+      <% ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(function (d) { %><div class="attendance__head"><%= d %></div><% }) %>
+      <% for (var i = 0; i < firstWeekday; i++) { %><div></div><% } %>
+      <% days.forEach(function (d) { %>
+        <div class="att<%= d.cls ? ' att--' + d.cls : '' %>"<%= d.title ? ' title="' + d.title + '"' : '' %>><%= d.day %></div>
+      <% }) %>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--c-success-soft);border:1px solid var(--c-success)"></i> был</span>
+      <span><i style="background:#FDECEA;border:1px solid var(--c-danger)"></i> пропуск</span>
+      <span><i style="background:#E8F0FB;border:1px solid #3A547F"></i> по справке</span>
+      <span><i style="background:var(--c-primary-soft);border:1px solid var(--c-primary)"></i> запланировано</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="stat-grid stat-grid--3">
+      <div class="stat"><div class="stat__value"><%= totals.present %></div><div class="stat__label">был</div></div>
+      <div class="stat"><div class="stat__value"><%= totals.absent %></div><div class="stat__label">пропусков</div></div>
+      <div class="stat"><div class="stat__value"><%= totals.sick %></div><div class="stat__label">по справке (не оплачиваются)</div></div>
+    </div>
+    <p class="small muted">Если ребёнок болел, загрузите справку в разделе <a href="/kabinet/spravki">«Справки»</a>: после проверки пропуски за этот период не оплачиваются.</p>
+  </div>
+</div>
+<div class="table-wrap">
+  <table class="table">
+    <thead><tr><th>Дата</th><th>Группа</th><th>Отметка</th><th>Баллы</th><th>Тема и комментарий учителя</th></tr></thead>
+    <tbody>
+      <% rows.forEach(function (r) { %>
+        <tr><td><%= fmt.short(r.date) %> <%= r.start %></td><td><span class="dot" style="background:<%= r.color %>"></span> <%= r.group_title %></td>
+          <td><%= r.lesson_status === 'cancelled' ? 'Отменено' : r.status ? statuses[r.status] : (r.date > today ? 'Запланировано' : 'Не отмечено') %></td>
+          <td><%= r.points === null || r.points === undefined ? '' : r.points %></td><td class="small"><%= r.topic || '' %><%= r.comment ? (r.topic ? ' · ' : '') + r.comment : '' %></td></tr>
+      <% }) %>
+      <% if (!rows.length) { %><tr><td colspan="5" class="muted">В этом месяце занятий нет.</td></tr><% } %>
+    </tbody>
+  </table>
+</div>
+<% } %>
+<%- include('../partials/cab-end') %>

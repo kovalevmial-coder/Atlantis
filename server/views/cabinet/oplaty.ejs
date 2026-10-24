@@ -1,0 +1,36 @@
+<%- include('../partials/cab-start', { title: 'Оплаты', active: '/kabinet/oplaty' }) %>
+<div class="cab-head">
+  <h1 class="h2">Оплаты</h1>
+  <%- include('../partials/child-switch') %>
+</div>
+<% if (!child) { %><p class="muted">Ребёнок ещё не привязан к аккаунту.</p><% } else { %>
+<div class="stat-grid">
+  <div class="card stat"><div class="stat__value"><%= fmt.money(bal.paid) %></div><div class="stat__label">оплачено всего</div></div>
+  <div class="card stat"><div class="stat__value"><%= fmt.money(bal.charged) %></div><div class="stat__label">начислено за занятия</div></div>
+  <div class="card stat stat--<%= bal.balance < 0 ? 'debt' : 'ok' %>"><div class="stat__value"><%= fmt.money(Math.abs(bal.balance)) %></div><div class="stat__label"><%= bal.balance < 0 ? 'задолженность' : 'переплата (аванс)' %></div></div>
+</div>
+<p class="small muted">Начисление делается за каждое проведённое занятие, на котором ребёнок был или пропустил без справки. Занятия по справке не оплачиваются. Стоимость учитывает льготу.</p>
+<div class="grid grid--2">
+  <div>
+    <h2 class="h3">Платежи</h2>
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Дата</th><th>Сумма</th><th>Где и как</th></tr></thead>
+      <tbody>
+        <% hist.payments.forEach(function (p) { %><tr><td><%= fmt.short(p.date) %></td><td><b><%= fmt.money(p.amount) %></b></td><td class="small"><%= p.branch %> · <%= p.methodTitle %><%= p.group_title ? ' · ' + p.group_title : '' %><%= p.comment ? ' · ' + p.comment : '' %></td></tr><% }) %>
+        <% if (!hist.payments.length) { %><tr><td colspan="3" class="muted">Платежей пока нет.</td></tr><% } %>
+      </tbody>
+    </table></div>
+  </div>
+  <div>
+    <h2 class="h3">Начисления</h2>
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Занятие</th><th>Группа</th><th>Сумма</th></tr></thead>
+      <tbody>
+        <% hist.charges.slice(0, 40).forEach(function (c) { %><tr><td><%= fmt.short(c.date) %> <%= c.time %></td><td class="small"><%= c.group_title %><%= c.status === 'absent' ? ' · пропуск без справки' : '' %></td><td><%= fmt.money(c.amount) %></td></tr><% }) %>
+        <% if (!hist.charges.length) { %><tr><td colspan="3" class="muted">Начислений пока нет.</td></tr><% } %>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+<% } %>
+<%- include('../partials/cab-end') %>

@@ -1,0 +1,33 @@
+<%# Расписание в стиле ИИС БГУИР. Параметры: mode ('public' | 'parent' | 'teacher' | 'director'), searchable %>
+<div class="sch" data-schedule data-mode="<%= mode %>"<% if (typeof fixedType !== 'undefined') { %> data-type="<%= fixedType %>" data-id="<%= fixedId %>"<% } %>>
+  <div class="sch__top">
+    <div class="sch__main">
+      <% if (mode === 'public') { %><h1 class="sch__title">Расписание</h1><% } %>
+      <% if (searchable) { %>
+      <div class="sch__search">
+        <input class="sch__input" type="search" placeholder="Группа, учитель, кабинет или точка" autocomplete="off" aria-label="Поиск расписания" data-sch-search>
+        <i data-icon="search"></i>
+        <ul class="sch__suggest" role="listbox" hidden data-sch-suggest></ul>
+      </div>
+      <% } %>
+      <div class="sch__info" data-sch-info></div>
+    </div>
+    <div class="sch__side">
+      <div class="sch__toggle" role="group" aria-label="Вид расписания">
+        <button type="button" class="sch__toggle-btn is-active" data-sch-view="table">Таблица</button>
+        <button type="button" class="sch__toggle-btn" data-sch-view="list">Список</button>
+      </div>
+      <div class="sch__week" data-sch-weekno></div>
+      <div class="sch__nav">
+        <button type="button" class="sch__arrow" data-sch-shift="-7" aria-label="Предыдущая неделя">‹</button>
+        <button type="button" class="sch__today" data-sch-today>Текущая неделя</button>
+        <button type="button" class="sch__arrow" data-sch-shift="7" aria-label="Следующая неделя">›</button>
+      </div>
+      <div class="sch__filters">
+        <label class="sch__check"><input type="checkbox" data-sch-past checked> Прошедшие</label>
+        <label class="sch__check"><input type="checkbox" data-sch-cancelled checked> Отменённые</label>
+      </div>
+    </div>
+  </div>
+  <div class="sch__body" data-sch-body aria-live="polite"><p class="sch__empty">Загрузка расписания…</p></div>
+</div>

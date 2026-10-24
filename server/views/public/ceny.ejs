@@ -1,0 +1,56 @@
+<%- include('../partials/head', { title: 'Цены на занятия 2026/27 — Атлантис, Брест', description: 'Стоимость занятий в центре «Атлантис» на 2026/27 учебный год: групповые занятия, каллиграфия, онлайн-курсы.', page: 'prices' }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <ol class="breadcrumbs"><li><a href="/">Главная</a></li><li aria-current="page">Цены</li></ol>
+        <h1>Цены на 2026/27 учебный год</h1>
+        <p class="lead" style="max-width:720px;margin:0">Открытые цены без «узнайте по телефону». Оплата за месяц, пробное занятие по записи.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid--3" id="prices"></div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section__head"><h2>Все направления и стоимость</h2></div>
+        <div class="table-wrap reveal">
+          <table class="table" id="price-table">
+            <thead><tr><th>Направление</th><th>Возраст</th><th>Формат</th><th>Стоимость</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="grid grid--3" style="margin-top:32px">
+          <div class="card reveal"><div class="card__icon"><i data-icon="users"></i></div><h3>Скидка на второго ребёнка</h3><p class="muted">Условия скидок уточняются.</p></div>
+          <div class="card reveal"><div class="card__icon"><i data-icon="wallet"></i></div><h3>Оплата</h3><p class="muted">Оплата за месяц. Онлайн-оплата появится в личном кабинете.</p></div>
+          <div class="card reveal"><div class="card__icon"><i data-icon="shield"></i></div><h3>Договор</h3><p class="muted">Работаем официально: ИП Ковалева А. А.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><h2>Вопросы об оплате</h2></div>
+        <div class="faq" id="faq"></div>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Запишитесь на пробное занятие</h2>
+            <p>Подберём группу по возрасту и задаче ребёнка. Перезвоним в течение дня.</p>
+          </div>
+          <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное <i data-icon="arrow"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/footer') %>

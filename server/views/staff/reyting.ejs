@@ -1,0 +1,19 @@
+<%- include('../partials/cab-start', { title: 'Рейтинг', active: base + '/reyting' }) %>
+<h1 class="h2">Рейтинг учеников</h1>
+<div class="month-switch">
+  <a class="btn btn--ghost btn--sm" href="?month=<%= prevMonth %>">←</a><strong><%= monthName %></strong><a class="btn btn--ghost btn--sm" href="?month=<%= nextMonth %>">→</a>
+</div>
+<p class="small muted">Полный рейтинг с фамилиями виден только сотрудникам. На сайте выводится топ-10 детей с согласием родителей.</p>
+<% if (!ranking.products.length) { %><p class="muted">Баллов за этот месяц пока нет.</p><% } %>
+<div class="rating-grid">
+<% ranking.products.forEach(function (p) { %>
+  <div class="card">
+    <h2 class="h3"><%= p.product %></h2>
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>#</th><th>Ученик</th><th>Баллы</th><th>Занятий</th><th>На сайте</th></tr></thead>
+      <tbody><% p.items.forEach(function (r) { %><tr><td><%= r.place %></td><td><%= r.full_name %></td><td><b><%= r.points %></b></td><td><%= r.visits %></td><td><%= r.rating_consent ? 'да' : 'нет' %></td></tr><% }) %></tbody>
+    </table></div>
+  </div>
+<% }) %>
+</div>
+<%- include('../partials/cab-end') %>

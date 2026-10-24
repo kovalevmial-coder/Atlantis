@@ -1,0 +1,41 @@
+<%- include('head', { title: title, page: 'cab', scripts: (typeof scripts !== 'undefined' ? scripts : []) }) %>
+<%- include('header') %>
+<%
+  var menus = {
+    PARENT: [
+      ['/kabinet', 'home', 'Главная'], ['/kabinet/raspisanie', 'calendar', 'Расписание'], ['/kabinet/poseshchaemost', 'checkCircle', 'Посещаемость'],
+      ['/kabinet/oplaty', 'wallet', 'Оплаты'], ['/kabinet/domashka', 'book', 'Домашние задания'], ['/kabinet/reyting', 'trophy', 'Рейтинг'],
+      ['/kabinet/spravki', 'file', 'Справки'], ['/kabinet/profil', 'user', 'Профиль и уведомления']
+    ],
+    TEACHER: [
+      ['/uchitel', 'home', 'Главная'], ['/uchitel/raspisanie', 'calendar', 'Расписание и журнал'], ['/uchitel/gruppy', 'users', 'Мои группы'],
+      ['/uchitel/oplaty', 'wallet', 'Оплаты'], ['/uchitel/spravki', 'file', 'Справки'], ['/uchitel/reyting', 'trophy', 'Рейтинг'], ['/uchitel/otchety', 'chart', 'Отчёты'],
+      ['/uchitel/profil', 'user', 'Профиль']
+    ],
+    DIRECTOR: [
+      ['/direktor', 'home', 'Главная'], ['/direktor/raspisanie', 'calendar', 'Расписание и журнал'], ['/direktor/gruppy', 'users', 'Группы'],
+      ['/direktor/ucheniki', 'heart', 'Ученики'], ['/direktor/uchitelya', 'book', 'Учителя'], ['/direktor/zayavki', 'chat', 'Заявки'],
+      ['/direktor/oplaty', 'wallet', 'Оплаты'], ['/direktor/spravki', 'file', 'Справки'], ['/direktor/reyting', 'trophy', 'Рейтинг'], ['/direktor/otchety', 'chart', 'Отчёты'],
+      ['/direktor/konstruktor', 'settings', 'Конструктор'], ['/direktor/polzovateli', 'shield', 'Пользователи'], ['/direktor/kopii', 'database', 'Резервные копии'],
+      ['/direktor/profil', 'user', 'Профиль']
+    ]
+  };
+  var menu = menus[user.role];
+  var current = typeof active !== 'undefined' ? active : '';
+%>
+  <main id="main">
+    <div class="container cab">
+      <aside class="cab__side">
+        <div class="cab__user">
+          <div class="cab__avatar"><%= user.full_name.split(' ').map(function (p) { return p[0]; }).slice(0, 2).join('') %></div>
+          <div><strong><%= user.full_name %></strong><br><span class="small muted"><%= user.roleTitle %><%= user.role === 'DIRECTOR' ? (user.branch_name ? ' · ' + user.branch_name : ' · все точки') : '' %></span></div>
+        </div>
+        <ul class="cab__menu">
+          <% menu.forEach(function (m) { %>
+            <li><a class="cab__link<%= current === m[0] ? ' is-active' : '' %>" href="<%= m[0] %>"<%= current === m[0] ? ' aria-current="page"' : '' %>><i data-icon="<%= m[1] %>"></i> <%= m[2] %><% if (m[1] === 'user' && user.unread > 0) { %> <span class="badge badge--count"><%= user.unread %></span><% } %></a></li>
+          <% }) %>
+          <li><form method="post" action="/vyhod"><button class="cab__link" type="submit"><i data-icon="logout"></i> Выйти</button></form></li>
+        </ul>
+      </aside>
+      <div class="cab__main">
+        <%- include('flash') %>

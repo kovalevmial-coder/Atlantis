@@ -1,0 +1,12 @@
+<%- include('../partials/head', { title: title, page: 'error' }) %>
+<%- include('../partials/header') %>
+  <main id="main">
+    <section class="section">
+      <div class="container" style="max-width:720px;text-align:center">
+        <h1><%= title %></h1>
+        <p class="lead"><%= message %></p>
+        <div class="btn-row" style="justify-content:center"><a class="btn btn--primary" href="/">На главную</a><% if (user) { %><a class="btn btn--secondary" href="<%= user.home %>">В кабинет</a><% } %></div>
+      </div>
+    </section>
+  </main>
+<%- include('../partials/footer') %>

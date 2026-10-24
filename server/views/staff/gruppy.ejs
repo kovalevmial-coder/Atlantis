@@ -1,0 +1,27 @@
+<%- include('../partials/cab-start', { title: user.role === 'DIRECTOR' ? 'Группы' : 'Мои группы', active: base + '/gruppy' }) %>
+<div class="cab-head">
+  <h1 class="h2"><%= user.role === 'DIRECTOR' ? 'Группы' : 'Мои группы' %></h1>
+  <% if (user.role === 'DIRECTOR') { %><a class="btn btn--primary" href="/direktor/gruppy/new"><i data-icon="plus"></i> Создать группу</a><% } %>
+</div>
+<form class="month-switch" method="get">
+  <label class="small muted">Загрузка за период</label>
+  <input class="input input--sm" type="date" name="from" value="<%= load.from %>"> – <input class="input input--sm" type="date" name="to" value="<%= load.to %>">
+  <button class="btn btn--ghost btn--sm" type="submit">Показать</button>
+</form>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Группа</th><th>Учитель</th><th>Мест</th><th>Записано</th><th>Ожидают</th><th>Плановая загрузка</th><th>Фактическая</th></tr></thead>
+  <tbody>
+  <% load.groups.forEach(function (g) { %>
+    <tr>
+      <td><a href="<%= base %>/gruppy/<%= g.id %>"><b><%= g.title %></b></a><br><span class="small muted"><%= g.product %> · <%= g.branch %></span></td>
+      <td class="small"><%= g.teacher %></td>
+      <td><%= g.capacity %></td><td><%= g.enrolled %></td><td><%= g.waiting || '' %></td>
+      <td><div class="loadbar loadbar--<%= g.level %>"><i style="width:<%= Math.min(g.plan, 100) %>%"></i><span><%= g.plan %>%</span></div></td>
+      <td><%= g.fact === null ? '—' : g.fact + '%' %></td>
+    </tr>
+  <% }) %>
+  <% if (!load.groups.length) { %><tr><td colspan="7" class="muted">Групп нет.</td></tr><% } %>
+  </tbody>
+</table></div>
+<p class="small muted">Плановая загрузка — записано детей от вместимости. Фактическая — сколько в среднем пришло на проведённые занятия за период. Красным выделены группы выше 90 %, жёлтым — ниже 50 %.</p>
+<%- include('../partials/cab-end') %>

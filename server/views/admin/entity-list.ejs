@@ -1,0 +1,19 @@
+<%- include('../partials/cab-start', { title: e.title, active: '/direktor/konstruktor' }) %>
+<a class="small" href="/direktor/konstruktor">← Конструктор</a>
+<div class="cab-head"><h1 class="h2" style="margin-top:8px"><%= e.title %></h1><a class="btn btn--primary" href="/direktor/konstruktor/<%= name %>/new"><i data-icon="plus"></i> Добавить <%= e.one %></a></div>
+<div class="table-wrap"><table class="table">
+  <thead><tr><% e.list.forEach(function (c) { var f = e.fields.find(function (x) { return x.name === c; }); %><th><%= f.label %></th><% }) %><th></th></tr></thead>
+  <tbody>
+  <% rows.forEach(function (r) { %>
+    <tr>
+      <% e.list.forEach(function (c) { var f = e.fields.find(function (x) { return x.name === c; }); var val = r[c]; %>
+        <td><% if (f.type === 'bool') { %><%= val ? 'да' : 'нет' %><% } else if (f.type === 'color') { %><span class="dot dot--lg" style="background:<%= val %>"></span> <%= val %><% } else if (f.type === 'select') { var o = (refs[c] || []).find(function (x) { return String(x.value) === String(val); }); %><%= o ? o.label : '' %><% } else if (f.type === 'money') { %><%= val === null ? '' : val %><% } else { %><%= val === null ? '' : String(val).slice(0, 80) %><% } %></td>
+      <% }) %>
+      <td class="nowrap"><a class="btn btn--ghost btn--sm" href="/direktor/konstruktor/<%= name %>/<%= r.id %>"><i data-icon="edit"></i> Изменить</a>
+        <button class="btn btn--ghost btn--sm" data-post="/api/admin/<%= name %>/<%= r.id %>" data-method="DELETE" data-reload data-confirm="Удалить запись? Если она используется, удаление будет запрещено — тогда снимите отметку «активен».">Удалить</button></td>
+    </tr>
+  <% }) %>
+  <% if (!rows.length) { %><tr><td colspan="<%= e.list.length + 1 %>" class="muted">Записей пока нет.</td></tr><% } %>
+  </tbody>
+</table></div>
+<%- include('../partials/cab-end') %>

@@ -1,0 +1,26 @@
+<%- include('../partials/cab-start', { title: 'Справки', active: '/kabinet/spravki' }) %>
+<h1 class="h2">Справки о болезни</h1>
+<% if (!children.length) { %><p class="muted">Ребёнок ещё не привязан к аккаунту.</p><% } else { %>
+<div class="grid grid--2">
+  <div class="card">
+    <h2 class="h3">Загрузить справку</h2>
+    <p class="small muted">После проверки учителем или директором пропуски за период справки отмечаются «по справке» и не оплачиваются.</p>
+    <form class="form" action="/api/sick-notes" data-api data-reload enctype="multipart/form-data">
+      <div class="field"><label for="sn-child">Ребёнок</label>
+        <select class="select" id="sn-child" name="childId"><% children.forEach(function (c) { %><option value="<%= c.id %>"><%= c.full_name %></option><% }) %></select></div>
+      <div class="field-row">
+        <div class="field"><label for="sn-from">Болел с</label><input class="input" id="sn-from" name="dateFrom" type="date" required></div>
+        <div class="field"><label for="sn-to">по</label><input class="input" id="sn-to" name="dateTo" type="date" required></div>
+      </div>
+      <div class="field"><label for="sn-file">Скан или фото справки (JPG, PNG, PDF до 5 МБ)</label><input class="input" id="sn-file" name="file" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" required></div>
+      <div class="field"><label for="sn-comment">Комментарий <span class="muted">(необязательно)</span></label><input class="input" id="sn-comment" name="comment"></div>
+      <button class="btn btn--primary" type="submit"><i data-icon="upload"></i> Отправить</button>
+    </form>
+  </div>
+  <div>
+    <h2 class="h3">Отправленные справки</h2>
+    <%- include('../partials/sick-list', { notes: notes, canReview: false }) %>
+  </div>
+</div>
+<% } %>
+<%- include('../partials/cab-end') %>

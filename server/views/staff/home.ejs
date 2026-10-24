@@ -1,0 +1,30 @@
+<%- include('../partials/cab-start', { title: 'Кабинет учителя', active: '/uchitel' }) %>
+<h1 class="h2">Здравствуйте, <%= user.full_name.split(' ')[1] || user.full_name %>!</h1>
+<div class="stat-grid">
+  <div class="card stat"><div class="stat__value"><%= today.length %></div><div class="stat__label">занятий сегодня</div></div>
+  <div class="card stat<%= unmarked.length ? ' stat--debt' : '' %>"><div class="stat__value"><%= unmarked.length %></div><div class="stat__label">занятий без отметок</div></div>
+  <div class="card stat"><div class="stat__value"><%= pendingNotes %></div><div class="stat__label">справок на проверке</div></div>
+</div>
+<div class="grid grid--2">
+  <section class="card">
+    <h2 class="h3">Сегодня</h2>
+    <% if (!today.length) { %><p class="muted">Сегодня занятий нет.</p><% } %>
+    <% today.forEach(function (l) { %>
+      <a class="lesson lesson--link" href="<%= base %>/zhurnal/<%= l.id %>">
+        <div class="lesson__date" style="border-color:<%= l.color %>"><b><%= l.start %></b><%= l.end %></div>
+        <div class="lesson__info"><strong><%= l.group_title %></strong><span class="small muted"><%= l.room %> · <%= l.status === 'done' ? 'журнал заполнен' : l.status === 'cancelled' ? 'отменено' : 'открыть журнал' %></span></div>
+      </a>
+    <% }) %>
+  </section>
+  <section class="card">
+    <h2 class="h3">Нужно заполнить журнал</h2>
+    <% if (!unmarked.length) { %><p class="muted">Все прошедшие занятия отмечены.</p><% } %>
+    <% unmarked.slice(0, 8).forEach(function (l) { %>
+      <a class="lesson lesson--link" href="<%= base %>/zhurnal/<%= l.id %>">
+        <div class="lesson__date"><b><%= l.date.slice(8) %></b><%= fmt.monthShort(l.date) %></div>
+        <div class="lesson__info"><strong><%= l.group_title %></strong><span class="small muted"><%= l.start %> · <%= l.room %></span></div>
+      </a>
+    <% }) %>
+  </section>
+</div>
+<%- include('../partials/cab-end') %>

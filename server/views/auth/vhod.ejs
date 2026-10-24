@@ -1,0 +1,89 @@
+<%- include('../partials/head', { title: 'Вход и регистрация', description: 'Личный кабинет родителя, учителя и директора центра «Атлантис».', page: 'auth-server', scripts: ['/app/auth.js'] }) %>
+<%- include('../partials/header') %>
+
+  <main id="main">
+    <section class="auth">
+      <div class="auth__aside">
+        <span class="eyebrow" style="color:#FFD2AE">Личный кабинет</span>
+        <h1>Вся учёба ребёнка в одном месте</h1>
+        <ul class="checklist" style="margin-top:24px">
+          <li>Расписание занятий в удобном виде</li>
+          <li>Посещаемость, пропуски и справки</li>
+          <li>Оплаты: сколько и где оплачено, долг или переплата</li>
+          <li>Домашние задания и рейтинг ребёнка</li>
+        </ul>
+      </div>
+      <div class="auth__main">
+        <div class="auth__box">
+          <%- include('../partials/flash') %>
+          <div class="tabs" role="tablist" aria-label="Вход или регистрация">
+            <button class="tabs__btn" type="button" role="tab" id="tab-login" aria-controls="panel-login" aria-selected="<%= tab === 'login' %>"<%= tab === 'login' ? '' : ' tabindex="-1"' %>>Вход</button>
+            <button class="tabs__btn" type="button" role="tab" id="tab-register" aria-controls="panel-register" aria-selected="<%= tab === 'register' %>"<%= tab === 'register' ? '' : ' tabindex="-1"' %>>Регистрация</button>
+          </div>
+
+          <div class="tab-panel" id="panel-login" role="tabpanel" aria-labelledby="tab-login"<%= tab === 'login' ? '' : ' hidden' %>>
+            <h2>Вход</h2>
+            <p class="small muted">Родители, учителя и директор входят по своей почте. Роль определяется автоматически.</p>
+            <form class="form" id="login-form" action="/api/auth/login" data-api>
+              <input type="hidden" name="next" value="<%= next %>">
+              <div class="field">
+                <label for="l-email">Электронная почта</label>
+                <input class="input" id="l-email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="l-pass">Пароль</label>
+                <input class="input" id="l-pass" name="password" type="password" autocomplete="current-password" required>
+                <span class="hint"><button class="btn btn--ghost btn--sm" type="button" data-toggle-password="l-pass" style="min-height:32px;padding:2px 10px">Показать</button> <a href="#forgot" data-auth-step="forgot" style="margin-left:8px">Забыли пароль?</a></span>
+              </div>
+              <button class="btn btn--primary btn--block" type="submit">Войти</button>
+            </form>
+          </div>
+
+          <div class="tab-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register"<%= tab === 'register' ? '' : ' hidden' %>>
+            <h2>Регистрация родителя</h2>
+            <p class="small muted">После регистрации мы пришлём на почту код подтверждения. Ребёнка к аккаунту привяжет администратор центра после пробного занятия. Аккаунты учителей создаёт директор.</p>
+            <form class="form" id="register-form" action="/api/auth/register" data-api>
+              <div class="field"><label for="g-name">Имя и фамилия</label><input class="input" id="g-name" name="fullName" autocomplete="name" required></div>
+              <div class="field"><label for="g-phone">Телефон</label><input class="input" id="g-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+375 (29) 000-00-00" required></div>
+              <div class="field"><label for="g-email">Электронная почта</label><input class="input" id="g-email" name="email" type="email" autocomplete="email" required></div>
+              <div class="field">
+                <label for="g-pass">Пароль</label>
+                <input class="input" id="g-pass" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                <span class="hint">Не меньше 8 символов, буквы и цифры. Пароль хранится в зашифрованном виде.</span>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" required><span>Согласен на обработку персональных данных в соответствии с <a href="/kontakty.html#privacy">политикой конфиденциальности</a></span></label>
+              <button class="btn btn--primary btn--block" type="submit">Создать аккаунт</button>
+            </form>
+          </div>
+
+          <div class="tab-panel" id="panel-verify" hidden>
+            <h2>Подтверждение почты</h2>
+            <p class="muted">Мы отправили 6-значный код на <b data-verify-email></b>. Код действует 30 минут.</p>
+            <form class="form" id="verify-form" action="/api/auth/verify" data-api>
+              <input type="hidden" name="email">
+              <div class="field"><label for="v-code">Код из письма</label><input class="input input--code" id="v-code" name="code" inputmode="numeric" maxlength="6" pattern="\d{6}" autocomplete="one-time-code" required></div>
+              <button class="btn btn--primary btn--block" type="submit">Подтвердить</button>
+            </form>
+            <button class="btn btn--ghost btn--sm" type="button" data-resend style="margin-top:12px">Отправить код ещё раз</button>
+          </div>
+
+          <div class="tab-panel" id="panel-forgot" hidden>
+            <h2>Восстановление пароля</h2>
+            <form class="form" id="forgot-form" action="/api/auth/forgot" data-api>
+              <div class="field"><label for="f-email">Электронная почта</label><input class="input" id="f-email" name="email" type="email" autocomplete="email" required></div>
+              <button class="btn btn--primary btn--block" type="submit">Получить код</button>
+            </form>
+            <form class="form" id="reset-form" action="/api/auth/reset" data-api hidden>
+              <input type="hidden" name="email">
+              <div class="field"><label for="r-code">Код из письма</label><input class="input input--code" id="r-code" name="code" inputmode="numeric" maxlength="6" required></div>
+              <div class="field"><label for="r-pass">Новый пароль</label><input class="input" id="r-pass" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+              <button class="btn btn--primary btn--block" type="submit">Сменить пароль</button>
+            </form>
+            <a href="/vhod" class="small" style="display:inline-block;margin-top:12px">Вернуться ко входу</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('../partials/foot-min') %>

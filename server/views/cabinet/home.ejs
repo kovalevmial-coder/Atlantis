@@ -1,0 +1,56 @@
+<%- include('../partials/cab-start', { title: 'Личный кабинет', active: '/kabinet' }) %>
+<h1 class="h2">Здравствуйте, <%= user.full_name.split(' ').slice(1).join(' ') || user.full_name %>!</h1>
+<% if (!children.length) { %>
+  <div class="card">
+    <h2 class="h3">Ребёнок ещё не привязан к аккаунту</h2>
+    <p class="muted">Оставьте заявку на пробное занятие. После него администратор центра привяжет ребёнка к вашему кабинету, и здесь появятся расписание, посещаемость и оплаты.</p>
+    <a class="btn btn--primary" href="#signup" data-signup>Записаться на пробное</a>
+  </div>
+<% } %>
+<% children.forEach(function (c) { %>
+  <section class="card child-card">
+    <div class="child-card__head">
+      <div><h2 class="h3"><%= c.full_name %></h2><span class="small muted"><%= c.grade || '' %><%= c.age !== null ? (c.grade ? ' · ' : '') + c.age + ' лет' : '' %><%= c.benefit ? ' · льгота: ' + c.benefit : '' %></span></div>
+      <div class="balance balance--<%= c.balance.balance < 0 ? 'debt' : 'ok' %>">
+        <span class="small"><%= c.balance.balance < 0 ? 'Задолженность' : 'Баланс' %></span>
+        <strong><%= fmt.money(Math.abs(c.balance.balance)) %></strong>
+        <a class="small" href="/kabinet/oplaty?child=<%= c.id %>">Подробнее</a>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat__value"><%= c.groups.length %></div><div class="stat__label"><%= c.groups.length === 1 ? 'группа' : 'группы' %></div></div>
+      <div class="stat"><div class="stat__value"><%= c.attRate === null ? '—' : c.attRate + '%' %></div><div class="stat__label">посещаемость в этом месяце</div></div>
+      <div class="stat"><div class="stat__value"><%= c.rating.length ? c.rating[0].place : '—' %></div><div class="stat__label">место в рейтинге<%= c.rating.length ? ' (' + c.rating[0].product + ')' : '' %></div></div>
+    </div>
+    <div class="grid grid--2">
+      <div>
+        <h3 class="h4">Ближайшие занятия</h3>
+        <% if (!c.next.length) { %><p class="muted small">Занятий на ближайшие две недели нет.</p><% } %>
+        <% c.next.forEach(function (l) { %>
+          <div class="lesson">
+            <div class="lesson__date"><b><%= l.date.slice(8) %></b><%= fmt.monthShort(l.date) %></div>
+            <div class="lesson__info"><strong><%= l.product %></strong><span class="small muted"><%= fmt.dayName(l.date) %>, <%= l.start %>–<%= l.end %> · <%= l.room %><%= l.status === 'cancelled' ? ' · отменено' : '' %></span></div>
+          </div>
+        <% }) %>
+      </div>
+      <div>
+        <h3 class="h4">Группы</h3>
+        <ul class="plain-list">
+          <% c.groups.forEach(function (g) { %>
+            <li><span class="dot" style="background:<%= g.color %>"></span> <b><%= g.title %></b> <span class="small muted">· <%= g.teacher %> · <%= g.status === 'waiting' ? 'лист ожидания' : g.status === 'trial' ? 'пробное' : fmt.money(g.price) + ' за занятие' %></span></li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </section>
+<% }) %>
+<% if (notifications.length) { %>
+  <section class="card">
+    <h2 class="h3">Уведомления</h2>
+    <ul class="notice-list">
+      <% notifications.forEach(function (n) { %><li class="<%= n.is_read ? '' : 'is-new' %>"><span class="small muted"><%= fmt.short(n.created) %></span> <%= n.text %></li><% }) %>
+    </ul>
+    <a class="small" href="/kabinet/profil">Все уведомления</a>
+  </section>
+<% } %>
+<%- include('../partials/cab-end') %>

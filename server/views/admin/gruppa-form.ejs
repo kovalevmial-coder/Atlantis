@@ -1,0 +1,16 @@
+<%- include('../partials/cab-start', { title: g ? 'Изменить группу' : 'Новая группа', active: '/direktor/gruppy' }) %>
+<a class="small" href="/direktor/gruppy<%= g ? '/' + g.id : '' %>">← Назад</a>
+<h1 class="h2" style="margin-top:8px"><%= g ? 'Изменить группу' : 'Новая группа' %></h1>
+<form class="card form form--grid" action="/api/admin/groups<%= g ? '/' + g.id : '' %>" data-api>
+  <div class="field field--wide"><label for="g-title">Название группы *</label><input class="input" id="g-title" name="title" value="<%= g ? g.title : '' %>" required placeholder="Например, Подготовка к школе, Вт/Пт 16:30"></div>
+  <div class="field"><label for="g-product">Продукт *</label><select class="select" id="g-product" name="productId" required><% products.forEach(function (p) { %><option value="<%= p.id %>"<%= g && g.product_id === p.id ? ' selected' : '' %>><%= p.title %> (<%= p.price %> руб.)</option><% }) %></select></div>
+  <div class="field"><label for="g-branch">Точка *</label><select class="select" id="g-branch" name="branchId" required><% branches.forEach(function (b) { %><option value="<%= b.id %>"<%= g && g.branch_id === b.id ? ' selected' : '' %>><%= b.name %></option><% }) %></select></div>
+  <div class="field"><label for="g-teacher">Учитель *</label><select class="select" id="g-teacher" name="teacherId" required><% teachers.forEach(function (t) { %><option value="<%= t.id %>"<%= g && g.teacher_id === t.id ? ' selected' : '' %>><%= t.full_name %></option><% }) %></select></div>
+  <div class="field"><label for="g-cap">Вместимость *</label><input class="input" id="g-cap" name="capacity" type="number" min="1" value="<%= g ? g.capacity : 10 %>" required></div>
+  <div class="field"><label for="g-price">Цена занятия, руб.</label><input class="input" id="g-price" name="price" type="number" min="0" step="0.01" value="<%= g && g.price !== null ? g.price : '' %>" placeholder="как у продукта"></div>
+  <div class="field"><label for="g-start">Начало занятий *</label><input class="input" id="g-start" name="startDate" type="date" value="<%= g ? g.start_date : defaults.start %>" required></div>
+  <div class="field"><label for="g-end">Конец занятий *</label><input class="input" id="g-end" name="endDate" type="date" value="<%= g ? g.end_date : defaults.end %>" required></div>
+  <% if (g) { %><label class="check field--wide"><input type="checkbox" name="isActive"<%= g.is_active ? ' checked' : '' %>><span>Группа работает</span></label><% } %>
+  <div class="btn-row field--wide"><button class="btn btn--primary" type="submit">Сохранить</button><span class="small muted">Время занятий задаётся на странице группы после сохранения.</span></div>
+</form>
+<%- include('../partials/cab-end') %>

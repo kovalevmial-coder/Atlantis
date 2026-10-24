@@ -1,0 +1,34 @@
+<%- include('../partials/cab-start', { title: 'Пользователи', active: '/direktor/polzovateli' }) %>
+<h1 class="h2">Пользователи</h1>
+<div class="grid grid--2-1">
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Пользователь</th><th>Роль</th><th>Последний вход</th><th></th></tr></thead>
+  <tbody>
+  <% list.forEach(function (u) { %>
+    <tr<%= u.is_active ? '' : ' class="is-muted"' %>>
+      <td><b><%= u.full_name %></b><br><span class="small muted"><%= u.email %><%= u.email_verified ? '' : ' · почта не подтверждена' %><%= u.locked ? ' · вход заблокирован' : '' %></span></td>
+      <td class="small"><%= roles[u.role] %><%= u.branch ? ' · ' + u.branch : '' %></td>
+      <td class="small"><%= u.last_login || '—' %></td>
+      <td class="nowrap">
+        <% if (u.id !== user.id) { %>
+        <button class="btn btn--ghost btn--sm" data-post="/api/admin/users/<%= u.id %>/reset" data-confirm="Выдать новый временный пароль?">Сбросить пароль</button>
+        <button class="btn btn--ghost btn--sm" data-post="/api/admin/users/<%= u.id %>/active" data-body='{"active":<%= !u.is_active %>}' data-reload><%= u.is_active ? 'Заблокировать' : 'Разблокировать' %></button>
+        <% } %>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table></div>
+<section class="card">
+  <h2 class="h3">Добавить директора</h2>
+  <p class="small muted">Директор точки видит только свою точку. Главный директор — все точки.</p>
+  <form class="form" action="/api/admin/directors" data-api data-reload>
+    <div class="field"><label for="d-name">ФИО</label><input class="input" id="d-name" name="fullName" required></div>
+    <div class="field"><label for="d-email">Почта</label><input class="input" id="d-email" name="email" type="email" required></div>
+    <div class="field"><label for="d-phone">Телефон</label><input class="input" id="d-phone" name="phone" type="tel"></div>
+    <div class="field"><label for="d-branch">Точка</label><select class="select" id="d-branch" name="branchId"><option value="">все точки</option><% branches.forEach(function (b) { %><option value="<%= b.id %>"><%= b.name %></option><% }) %></select></div>
+    <button class="btn btn--primary" type="submit">Создать</button>
+  </form>
+</section>
+</div>
+<%- include('../partials/cab-end') %>

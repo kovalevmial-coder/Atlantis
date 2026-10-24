@@ -1,0 +1,39 @@
+<%- include('../partials/cab-start', { title: 'Оплаты', active: base + '/oplaty' }) %>
+<h1 class="h2">Оплаты</h1>
+<div class="grid grid--2">
+  <section class="card">
+    <h2 class="h3">Принять оплату</h2>
+    <form class="form" action="/api/payments" data-api data-reload>
+      <div class="field"><label for="p-child">Ученик</label>
+        <select class="select" id="p-child" name="childId" required><option value="">Выберите ученика</option>
+          <% kids.forEach(function (k) { %><option value="<%= k.id %>"><%= k.full_name %> (<%= k.groups %>), баланс <%= fmt.money(k.balance) %></option><% }) %></select></div>
+      <div class="field-row">
+        <div class="field"><label for="p-amount">Сумма, руб.</label><input class="input" id="p-amount" name="amount" type="number" min="0.01" step="0.01" required></div>
+        <div class="field"><label for="p-method">Способ</label><select class="select" id="p-method" name="method"><option value="cash">Наличные</option><option value="card">Карта</option><option value="erip">ЕРИП</option></select></div>
+        <div class="field"><label for="p-date">Дата</label><input class="input" id="p-date" name="paidAt" type="date" value="<%= today %>"></div>
+      </div>
+      <div class="field"><label for="p-comment">Комментарий</label><input class="input" id="p-comment" name="comment" maxlength="255" placeholder="Например, за октябрь"></div>
+      <button class="btn btn--primary" type="submit">Принять оплату</button>
+    </form>
+  </section>
+  <section class="card">
+    <div class="cab-head"><h2 class="h3">Должники</h2>
+      <% if (debtors.length) { %><button class="btn btn--secondary btn--sm" data-post="/api/payments/remind" data-reload><i data-icon="bell"></i> Напомнить всем</button><% } %></div>
+    <% if (!debtors.length) { %><p class="muted">Задолженностей нет.</p><% } %>
+    <ul class="plain-list">
+      <% debtors.forEach(function (d) { %><li><b><%= d.full_name %></b> <span class="text-danger"><%= fmt.money(d.balance) %></span><br><span class="small muted"><%= d.groups || '' %><%= d.parent ? ' · ' + d.parent : '' %></span></li><% }) %>
+    </ul>
+  </section>
+</div>
+<h2 class="h3">Последние оплаты</h2>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Дата</th><th>Ученик</th><th>Сумма</th><th>Способ</th><th>Группа</th><th>Принял</th><% if (user.role === 'DIRECTOR') { %><th></th><% } %></tr></thead>
+  <tbody>
+  <% recent.forEach(function (p) { %>
+    <tr><td><%= fmt.short(p.date) %></td><td><%= p.child %></td><td><b><%= fmt.money(p.amount) %></b></td><td><%= p.methodTitle %></td><td class="small"><%= p.group_title || '' %></td><td class="small"><%= p.received_by || '' %></td>
+      <% if (user.role === 'DIRECTOR') { %><td><button class="btn btn--ghost btn--sm" data-post="/api/payments/<%= p.id %>" data-method="DELETE" data-reload data-confirm="Удалить оплату? Действие попадёт в журнал.">Удалить</button></td><% } %></tr>
+  <% }) %>
+  <% if (!recent.length) { %><tr><td colspan="7" class="muted">Оплат пока нет.</td></tr><% } %>
+  </tbody>
+</table></div>
+<%- include('../partials/cab-end') %>

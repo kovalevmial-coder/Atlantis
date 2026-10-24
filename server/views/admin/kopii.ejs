@@ -1,0 +1,16 @@
+<%- include('../partials/cab-start', { title: 'Резервные копии', active: '/direktor/kopii' }) %>
+<div class="cab-head"><h1 class="h2">Резервные копии базы данных</h1>
+  <button class="btn btn--primary" data-post="/api/admin/backups" data-reload><i data-icon="database"></i> Создать копию сейчас</button></div>
+<p class="muted">Копия создаётся автоматически каждый день в 03:00 (хранятся последние 14). Перед восстановлением система сама делает страховочную копию текущих данных.</p>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>Файл</th><th>Создан</th><th>Размер</th><th></th></tr></thead>
+  <tbody>
+  <% list.forEach(function (b) { %>
+    <tr><td class="small"><%= b.file %></td><td class="small"><%= b.createdText %></td><td class="small"><%= Math.round(b.size / 1024) %> КБ</td>
+      <td class="nowrap"><a class="btn btn--ghost btn--sm" href="/direktor/kopii/<%= b.file %>"><i data-icon="download"></i> Скачать</a>
+        <button class="btn btn--ghost btn--sm" data-post="/api/admin/backups/<%= b.file %>/restore" data-reload data-confirm="Восстановить базу из этой копии? Текущие данные будут заменены (страховочная копия создастся автоматически).">Восстановить</button></td></tr>
+  <% }) %>
+  <% if (!list.length) { %><tr><td colspan="4" class="muted">Копий пока нет.</td></tr><% } %>
+  </tbody>
+</table></div>
+<%- include('../partials/cab-end') %>
